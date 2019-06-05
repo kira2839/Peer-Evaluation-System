@@ -6,7 +6,8 @@ h1 {
 
 p {
   
-  color: red;
+  color: orange;
+  text-align: center
 }
 
 input[type=text] {
@@ -27,7 +28,7 @@ input[type=button], input[type=submit], input[type=reset] {
   cursor: pointer;
   border: 2px solid black;
   font-style: oblique;
-  
+ 
 }
 
 
@@ -45,5 +46,15 @@ input[type=button]:focus {
   width: 100%;
 }
 
+.header {
+  padding: 0px;
+  background: #ffffff00;
+  color: white;
+  font-size: 30px;
+}
+
+form {
+  text-align: center;
+}
 
 
