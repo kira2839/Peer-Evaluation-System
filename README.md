@@ -1,2 +1,2 @@
 # CSE542
-Software Engineering Concepts Course at UB
+The code with fully working functionalities appear here.
