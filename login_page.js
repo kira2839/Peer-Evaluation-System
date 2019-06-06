@@ -1,10 +1,10 @@
 function isValid(){
 var email_id = document.getElementById('email_id').value;
-
+email_id = email_id.toLowerCase();
 
 if(email_id.endsWith("@buffalo.edu")){
 if(!(email_id.toLowerCase() === ".@buffalo.edu")){
-if((email_id.match(/\./g) || []).length<3&&(email_id.match(/@/g) || []).length<2&&email_id.split("@")[0].match("^[A-z0-9.]+$")){
+if((email_id.match(/\./g) || []).length<3&&(email_id.match(/@/g) || []).length<2&&email_id.split("@")[0].match("^[a-z0-9.]+$")){
 	if(document.getElementById('submit_button').disabled){
 	document.getElementById('submit_button').disabled=false;}
 	mouseOver();
