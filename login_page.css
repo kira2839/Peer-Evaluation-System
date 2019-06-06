@@ -4,8 +4,35 @@ h1 {
   font-style: italic;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
 p {
-  
   color: orange;
   text-align: center
 }
@@ -19,7 +46,7 @@ input[type=text] {
 
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #4CAF50;
+  background-color: none;
   border: none;
   color: white;
   padding: 16px 32px;
@@ -28,15 +55,16 @@ input[type=button], input[type=submit], input[type=reset] {
   cursor: pointer;
   border: 2px solid black;
   font-style: oblique;
- 
 }
-
-
 
 body {
   background-image: url("ub.jpg");
+  text-align: center;
 }
 
+form {
+    display: inline-block;
+}
 input[type=button] {
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
@@ -46,15 +74,16 @@ input[type=button]:focus {
   width: 100%;
 }
 
+
+.inputbox{
+   width: 300px;
+   height : 25px;
+}
 .header {
   padding: 0px;
   background: #ffffff00;
   color: white;
   font-size: 30px;
-}
-
-form {
-  text-align: center;
 }
 
 
