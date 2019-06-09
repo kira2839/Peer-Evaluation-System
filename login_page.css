@@ -1,89 +1,180 @@
 h1 {
-  
-  color: orange;
-  font-style: italic;
+    color: whitesmoke;
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
+.nav_bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    overflow: hidden;
+    /*background-color: #333;*/
+    background-color: #015BBB;
 }
 
-li {
-  float: left;
+.orange:hover {
+    background: #a11b0a;}
+
+.orange {
+    background: #da3c28;
+    border: 1px solid rgba(255,255,255,0);
+    border-color: #e98a84;
 }
 
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+.about {
+    display: inline-block;
+    font: 12px/1.2 Sofia,Arial,sans-serif;
+    text-decoration: none;
+    padding: 6px 10px 4px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    border-radius: 4px;
+    min-width: 65px;
+    margin: 10px 0;
+    cursor: pointer;
+    border: 1px solid;
 }
 
-li a:hover:not(.active) {
-  background-color: #111;
+.contact_us{
+    display: inline-block;
+    font: 20px/1.2 Sofia,Arial,sans-serif;
+    text-decoration: none;
+    padding: 6px 10px 4px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
-.active {
-  background-color: #4CAF50;
+.bar_li {
+    float: left;
+    display: inline-block;
+    text-align: center;
 }
 
-p {
-  color: orange;
-  text-align: center
+.bar_li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding-top: auto;
+    padding-bottom: auto;
+    text-decoration: none;
+    background-size:100% auto;
+}
+
+.ub-logo {
+    font: 30px Kievit,Sofia,Arial,sans-serif;
+    float: left;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.logo-black {
+    background-repeat: no-repeat;
+    background-color: #015BBB;
+    background-size:100% auto;
+    width: 20%;
+    height: 20%;
+    max-width:100%;
+    max-height:100%;
+    size: auto;
+    float: left;
+    padding-bottom: 1%;
+}
+
+.show_msg {
+    color: darkorange;
+    text-align: center;
+    font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.3333;
 }
 
 input[type=text] {
-  width:50%
-  border: 2px solid red;
-  border-radius: 4px;
-  background-color: #3CBC8D;
+    width: 50%;
+    border: 2px solid red;
+    border-radius: 4px;
+    background-color: #3CBC8D;
 }
 
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: none;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border: 2px solid black;
-  font-style: oblique;
+    background-color: none;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: 2px solid black;
+    font-style: oblique;
 }
 
 body {
-  background-image: url("ub.jpg");
-  text-align: center;
+    background: transparent;
+    text-align: center;
+    background: url("./ub.jpg");
+    background-repeat: no-repeat;
+    background-size:100% auto;
+    background-color: #015BBB;
+}
+
+.error_div {
+    margin: 0;
+    padding: 0;
+    color: red;
+    overflow: hidden;
+    align-content: center;
+    text-align: center;
 }
 
 form {
     display: inline-block;
 }
+
+.error {
+    color: red;
+    font-size: 10px;
+    font-weight: 100;
+}
+
+.from_server {
+    color: darkblue;
+    font-size: 10px;
+    font-weight: 100;
+}
+
 input[type=button] {
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
 }
 
 input[type=button]:focus {
-  width: 100%;
+    width: 100%;
 }
 
-
-.inputbox{
-   width: 300px;
-   height : 25px;
+.input_form {
+    alignment: center;
+    alignment-baseline: center;
+    height: auto;
+    min-height: 200px;
+    width: auto;
+    max-width: 60%;
+    min-width: 50%;
+    display: inline-block;
 }
+
 .header {
-  padding: 0px;
-  background: #ffffff00;
-  color: white;
-  font-size: 30px;
+    padding: 0px;
+    background: #ffffff00;
+    color: white;
+    font-size: 30px;
 }
 
 

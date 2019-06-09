@@ -1,34 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="us">
 
 <head>
-  <meta charset="utf-8">
-  <link href="./login_page.css" type="text/css" rel="stylesheet">
-  <title>Peer Evaluations</title>
+    <meta charset="utf-8">
+    <link href="./jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+    <link href="./login_page.css" type="text/css" rel="stylesheet">
+    <title>Peer Evaluations</title>
 </head>
-<div id= "nav-bar">
-<ul>
-  <li><a href="/CSE442-542/2019-Summer/cse-442a/index.html">Home</a></li>
-  <!-- <li><a href="/CSE442-542/2019-Summer/cse-442a/about_us.html">About Us</a></li> -->
-  <!-- <li><a href="#">How to Use this Product</a></li> -->
-  <li style="float:right"><a class="active" href="/CSE442-542/2019-Summer/cse-442a/about_us.html">About Us</a></li>
-</ul>
+<div id="nav-bar">
+    <ul class="nav_bar">
+        <li class="bar_li">
+            <a href="./index.html" aria-label="UB logo"><i class="icon icon-ub-logo"></i>
+                <img class="logo-black" src="./logo2.png" alt="University at Buffalo print logo">
+                <span class="ub-logo">Peer Evaluations</span>
+            </a></li>
+        <li style="float:right" class="bar_li"><a class="about orange" href="./about_us.html">About Us</a></li>
+    </ul>
 </div>
 <body>
-  <div class="header">
-  <img src="./logo2.png" alt="University at buffalo logo">
-  <p><b><em>Peer Evaluations</em></b></p>
-</div>
-  <br>
-  <br> <br>
-  <div class="input_form">
-<script type="text/javascript" src="/CSE442-542/2019-Summer/cse-442a/login_page.js"></script>
-  <form action="/CSE442-542/2019-Summer/cse-442a/send_mail.php">
 
-    <p><b><font size="+3">Please Enter Your UB Email-ID to Login With a Confirmation Code:</font></b></p><br>
-    <input id="email_id" type="text" name="email-id" onmouseleave="isValid()" required placeholder="UBITname@buffalo.edu" class="inputbox"/><br><br>
-    <input id="submit_button" type="submit" value="Get Code" onclick="isValid()">  
-  </form>
-  </div>
+<br> <br> <br>
+
+<div id="tabs" class="input_form ui-tabs ui-corner-all ui-widget ui-widget-content">
+    <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+        <li role="tab" tabindex="0"
+            class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active"
+            aria-controls="tabs-1" aria-selected="true" aria-expanded="true">
+            <a href="#tabs-1" role="presentation" tabindex="-1" class="ui-tabs-anchor">
+                Get Confirmation Code</a>
+        </li>
+        <li role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab"
+            aria-controls="tabs-2" aria-selected="false" aria-expanded="false">
+            <a href="#tabs-2" role="presentation" tabindex="-1" class="ui-tabs-anchor">
+                Start Evaluation</a>
+        </li>
+    </ul>
+    <div id="tabs-1" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="true"
+         style="display: none;">
+        <form name="email_form">
+            <p class="show_msg"> Please enter your UB Email-ID: </p>
+            <input oninput="clearClass()" id="email_id" class="ui-widget ui-widget-content" name="email_id"
+                   type="email" title="type &quot;a&quot;" required
+                   placeholder="UBITname@buffalo.edu" class="ui-autocomplete-input" autocomplete="on"/>
+            <div id="error_div" class="error_div">
+                <table class="error_table" align="center">
+                    <tr>
+                        <td><span id="error_span"></span></td>
+                        <td><p name="error_text" id="error_text" class="error"></p></td>
+                    </tr>
+                    <tr>
+                        <td><span id="from_server_span"></span></td>
+                        <td><p name="from_server_text" id="from_server_text" class="from_server"></p></td>
+                    </tr>
+                </table>
+                </p></div>
+            <button onclick="return isValid(document.email_form.email_id)" id="button"
+                    class="ui-button ui-corner-all ui-widget">Get Code
+            </button>
+        </form>
+    </div>
+    <div id="tabs-2" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="false"
+         style="display: block;">
+        <form name="email_form_tab2" action="./send_mail.php">
+            <p class="show_msg"> Please enter your details: </p>
+            <input oninput="clearClassTab2()" id="email_id_tab2" class="ui-widget ui-widget-content"
+                   name="email_id_tab2"
+                   type="email" title="type &quot;a&quot;" required
+                   placeholder="UBITname@buffalo.edu" class="ui-autocomplete-input" autocomplete="on"/>
+            <p class="show_msg"></p>
+            <input oninput="clearClassTab2()" id="confirmation_code" class="ui-widget ui-widget-content"
+                   name="confirmation_code"
+                   placeholder="Confirmation Code" title="type &quot;a&quot;" required class="ui-autocomplete-input"
+                   autocomplete="on"/>
+            <div id="error_div_tab2" class="error_div">
+                <table class="error_table" align="center">
+                    <tr>
+                        <td><span id="error_span_tab2"></span></td>
+                        <td><p id="error_text_tab2" class="error"></p></td>
+                    </tr>
+                    <tr>
+                        <td><span id="error_confirmation_span"></span></td>
+                        <td><p id="error_confirmation_text" class="error"></p></td>
+                    </tr>
+                </table>
+                </p></div>
+            <button id="button_tab2"
+                    onclick="return isValidMailAndConfirmation(document.email_form_tab2.email_id_tab2, document.email_form_tab2.confirmation_code)"
+                    class="ui-button ui-corner-all ui-widget">Start Evaluation
+            </button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="./login_page.js"></script>
+<script src="jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+<script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script>
+    $("#tabs").tabs({
+        activate: function (event, ui) {
+            clearClass()
+        }
+    });
+</script>
 </body>
 </html>
