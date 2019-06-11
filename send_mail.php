@@ -78,8 +78,8 @@ if (isset($_POST['email_id'])) {
     //Construct email body to be sent
     $msg = "Dear Student,\r\n\r\nThank you for initiating evaluation process.\r\n" .
         "Use confirmation code: " . $confirmationCode .
-        " to begin the evaluation.\r\n To start evaluation go to " . $actualLink . " link.\r\nP.S. " .
-        "The code will be valid for 15 minutes only.\r\n\r\nRegards,\r\nInstructor/TA";
+        " to begin your evaluation.\r\nTo start evaluation go to " . $actualLink . " and enter your details.\r\nP.S. " .
+        "The code will be valid for next 15 minutes only. You can re-generate if necessary.\r\n\r\nRegards,\r\nInstructor/TA";
 
     try {
         //send message with code to student
