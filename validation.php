@@ -43,5 +43,5 @@
 
    else
 {
-   print "either email or confirmation code has exceeded time limit.";
+   print "either email-id is wrong or confirmation code has exceeded time limit.";
 }
