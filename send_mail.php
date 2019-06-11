@@ -14,7 +14,7 @@ if (isset($_POST['email_id'])) {
     // hash
     $key = hash('sha256', $secret_key);
     $timeinsecs = time();
-    $currentTime = date('Y-m-d @h:i:s A', $timeinsecs);
+    $currentTime = $timeinsecs;
     $emailprocessed = $email . $currentTime;
 	
 	
