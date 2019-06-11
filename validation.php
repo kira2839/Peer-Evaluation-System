@@ -24,15 +24,15 @@
 
     $letters = preg_replace('/[^a-zA-Z@.]/', '', $decryptedMessage);
 
-    echo $letters;
+    //echo $letters;
    
     $numbers = preg_replace('/[^0-9]/', '', $decryptedMessage);
 
-    echo $numbers;
+    //echo $numbers;
 
-    echo "\n";
+    //echo "\n";
 
-    echo time();
+   // echo time();
 
     
 
