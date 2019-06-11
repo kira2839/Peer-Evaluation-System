@@ -7,7 +7,7 @@ if (isset($_POST['email_id'])) {
 
     $ubItName = stristr($email, "@buffalo.edu", true);
     if ($ubItName === false) {
-        echo "Please enter buffalo mail id only.";
+        echo "Please enter buffalo mail id only";
         return;
     }
 
@@ -20,7 +20,7 @@ if (isset($_POST['email_id'])) {
     $timeInSecs = time();
     $currentTime = date('Y-m-d H:i:s T', $timeInSecs);
     if ($currentTime === false) {
-        echo "We are facing issue while sending confirmation code. Please contact course Instructor.";
+        echo "We are facing issue while sending confirmation code. Please contact course Instructor";
         return;
     }
 
@@ -29,7 +29,7 @@ if (isset($_POST['email_id'])) {
     $iv = substr(hash('sha256', $secretIV), 0, 16);
     $encryptedMsg = openssl_encrypt($msgToBeEncrypted, $encryptMethod, $key, 0, $iv);
     if ($encryptedMsg === false) {
-        echo "We are facing issue while sending confirmation code. Please contact course Instructor.";
+        echo "We are facing issue while sending confirmation code. Please contact course Instructor";
         return;
     }
     $confirmationCode = base64_encode($encryptedMsg);
@@ -91,8 +91,7 @@ if (isset($_POST['email_id'])) {
             print "Thank you for contacting us!\n";
             print "The confirmation code is on its way. Check your email: " . $email;
         } else {
-            print "Thank you for contacting us!\n";
-            print "The confirmation code is on its way. Try again if you don't receive shortly.";
+            print "Failed to send confirmation code. Try again after sometime";
         }
     } catch (Exception $e) {
         echo $e->getMessage();

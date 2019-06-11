@@ -20,7 +20,7 @@ $key = hash('sha256', $secretKey);
 $iv = substr(hash('sha256', $secretIV), 0, 16);
 $decryptedMessage = openssl_decrypt(base64_decode($confirmationCode), $encryptMethod, $key, 0, $iv);
 if ($decryptedMessage === false) {
-    echo "Invalid confirmation code";
+    echo "Invalid Email Address/Confirmation code";
     return;
 }
 
@@ -54,14 +54,14 @@ if ($timeInSecs !== false) {
     $sinceConfirmationCodeGenerated = $timeInSecs - $timestampFromConfirmationCode->getTimestamp();
     //900 is in second for 15 minutes
     if ($sinceConfirmationCodeGenerated >= 900) {
-        echo "The confirmation code is expired. Please get another code.";
+        echo "The confirmation code is expired. Please get another code";
         return;
     } else if ($sinceConfirmationCodeGenerated < 0) {
-        echo "Invalid confirmation code";
+        echo "Invalid Email Address/Confirmation code";
         return;
     }
-    echo "Validated your details. Soon the evaluation system will be ready for next step. Try Later.";
+    echo "Validated your details. Soon the evaluation system will be ready for next step. Try Later";
 } else {
-    echo "We are facing issue while verifying confirmation code. Please contact course Instructor.";
+    echo "We are facing issue while verifying confirmation code. Please contact course Instructor";
     return;
 }
