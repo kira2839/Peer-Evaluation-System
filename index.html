@@ -61,7 +61,7 @@
     </div>
     <div id="tabs-2" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="false"
          style="display: block;">
-        <form name="email_form_tab2" action="./validation.php">
+        <form name="email_form_tab2">
             <p class="show_msg"> Please enter your details: </p>
             <input oninput="clearClassTab2()" id="email_id_tab2" class="ui-widget ui-widget-content"
                    name="email_id_tab2"
@@ -81,6 +81,10 @@
                     <tr>
                         <td><span id="error_confirmation_span"></span></td>
                         <td><p id="error_confirmation_text" class="error"></p></td>
+                    </tr>
+                    <tr>
+                        <td><span id="from_server_cr_span"></span></td>
+                        <td><p name="from_server_cr_text" id="from_server_cr_text" class="from_server"></p></td>
                     </tr>
                 </table>
                 </p></div>
