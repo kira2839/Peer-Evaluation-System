@@ -12,8 +12,8 @@
 
     $encrypt_method = "AES-256-CBC";
 
-    $secret_key = 'SECRET_KEY';
-
+    $secret_key = '190oasidjo*123n-dj';
+	
     $secret_iv = 'RANDOM_SEED';
 		// hash
     $key = hash('sha256', $secret_key);
