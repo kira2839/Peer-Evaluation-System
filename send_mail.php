@@ -6,25 +6,25 @@ if (isset($_POST['email_id'])) {
     $subject = "Confirmation code for the evaluation";
 
     // Encrypt Script Starts Here
-		$output = false;
-		$encrypt_code = "";
-		$encrypt_method = "AES-256-CBC";
-		$secret_key = 'SECRET_KEY';
-		$secret_iv = 'RANDOM_SEED';
-		// hash
-		$key = hash('sha256', $secret_key);
-		$timeinsecs = time();
-		$currentTime = date('Y-m-d @h:i:s A', $timeinsecs);
-		$email = $email . $currentTime;
-		
-		
-		// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
-		$iv = substr(hash('sha256', $secret_iv), 0, 16);
-		$output = openssl_encrypt($email, $encrypt_method, $key, 0, $iv);
-		$confirmationCode = base64_encode($output);
-		
-		// $decryptedMessage = openssl_decrypt(base64_decode($confirmationCode), $encrypt_method, $key, 0, $iv);
-		// echo "Encryption Code is :" .$confirmationCode;
+	$output = false;
+	$encrypt_code = "";
+	$encrypt_method = "AES-256-CBC";
+	$secret_key = '190oasidjo*123n-dj';
+	$secret_iv = 'RANDOM_SEED';
+	// hash
+	$key = hash('sha256', $secret_key);
+	$timeinsecs = time();
+	$currentTime = date('Y-m-d @h:i:s A', $timeinsecs);
+	$emailprocessed = $email . $currentTime;
+	
+	
+	// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+	$iv = substr(hash('sha256', $secret_iv), 0, 16);
+	$output = openssl_encrypt($emailprocessed, $encrypt_method, $key, 0, $iv);
+	$confirmationCode = base64_encode($output);
+	
+	// $decryptedMessage = openssl_decrypt(base64_decode($confirmationCode), $encrypt_method, $key, 0, $iv);
+	// echo "Encryption Code is :" .$confirmationCode;
 			
 	// Encrypt Script Ends Here
 	
