@@ -8,6 +8,8 @@ if (!isset($_POST['confirmation_code'])) {
     echo "Confirmation code is not set";
 }
 
+//900 seconds i.e. 15 minutes
+$TIME_FOR_CODE_EXPIRY = 900;
 $email = $_POST['email_id_tab2'];
 $confirmationCode = $_POST['confirmation_code'];
 
@@ -53,7 +55,7 @@ if ($timeInSecs !== false) {
     $timestampFromConfirmationCode = DateTime::createFromFormat('Y-m-d H:i:s T', $timestampFromConfirmationCode);
     $sinceConfirmationCodeGenerated = $timeInSecs - $timestampFromConfirmationCode->getTimestamp();
     //900 is in second for 15 minutes
-    if ($sinceConfirmationCodeGenerated >= 900) {
+    if ($sinceConfirmationCodeGenerated >= $TIME_FOR_CODE_EXPIRY) {
         echo "The confirmation code is expired. Please get another code";
         return;
     } else if ($sinceConfirmationCodeGenerated < 0) {
