@@ -32,7 +32,7 @@ function isValid(inputMailId) {
 function postToServerForSendingMail() {
     $.ajax({
         type: "POST",
-        url: "send_mail.php",
+        url: "backend/send_mail.php",
         data: {email_id: document.email_form.email_id.value}
     }).done(function (msg) {
         if (msg.includes("Thank")) {
@@ -92,7 +92,7 @@ function isValidMailAndConfirmation(inputMailId, inputConfirmationCode) {
 function postToServerForConfirmationCodeValidation() {
     $.ajax({
         type: "POST",
-        url: "confirmation_code_validation.php",
+        url: "backend/confirmation_code_validation.php",
         data: {
             email_id_tab2: document.email_form_tab2.email_id_tab2.value,
             confirmation_code: document.email_form_tab2.confirmation_code.value
