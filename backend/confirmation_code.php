@@ -24,20 +24,20 @@ class ConfirmationCode
 
         if($confirmationCodeHashAtDB === false) {
             echo "Invalid Email Address/Confirmation code";
-            return;
+            return false;
         }
 
         if(!password_verify($confirmationCode, $confirmationCodeHashAtDB)) {
             echo "Invalid Email Address/Confirmation code";
-            return;
+            return false;
         }
 
         $confirmationCodeHashAtDB = $this->studentModel->getActiveConfirmationCode($emailAddress);
         if($confirmationCodeHashAtDB === false) {
             echo "The confirmation code is expired. Please get another code";
-            return;
+            return false;
         }
 
-        echo "Validated your details. Soon the evaluation system will be ready for next step. Try Later";
+        return true;
     }
 }

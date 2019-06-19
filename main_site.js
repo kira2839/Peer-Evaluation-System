@@ -92,7 +92,7 @@ function isValidMailAndConfirmation(inputMailId, inputConfirmationCode) {
 function postToServerForConfirmationCodeValidation() {
     $.ajax({
         type: "POST",
-        url: "backend/start_evaluation.php",
+        url: "backend/login.php",
         data: {
             email_id_tab2: document.email_form_tab2.email_id_tab2.value,
             confirmation_code: document.email_form_tab2.confirmation_code.value
