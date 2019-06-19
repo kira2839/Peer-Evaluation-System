@@ -1,5 +1,5 @@
 <?php
-require('db_connector.php');
+include_once('db_connector.php');
 
 class DBSetup
 {
@@ -52,6 +52,7 @@ class DBSetup
                    email_address VARCHAR(255) NOT NULL,
                    confirmation_code VARCHAR(255),
                    last_generated_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                   is_code_used INT UNSIGNED NOT NULL DEFAULT 0,
                    CONSTRAINT PK_STUDENT_ID PRIMARY KEY (id),
                    CONSTRAINT PK_STUDENT_EMAIL_ID UNIQUE KEY (email_address)
                 ) ENGINE=InnoDB";

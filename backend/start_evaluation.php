@@ -1,7 +1,7 @@
 <?php
 
-require('email.php');
-require('confirmation_code.php');
+include_once('email.php');
+include_once('confirmation_code.php');
 
 if (!isset($_POST['email_id_tab2'])) {
     echo "Student Email Address is not set";
