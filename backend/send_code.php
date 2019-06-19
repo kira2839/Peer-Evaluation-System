@@ -19,13 +19,11 @@ if (isset($_POST['email_id'])) {
         return;
     }
 
-    ob_start();
     $studentModel = new StudentModel();
     if($studentModel->insert($email->getEmailAddress(), $code) === false) {
         $studentModel->update($email->getEmailAddress(), $code);
     }
-    ob_end_clean();
-
+    
     $email->sendMail($code);
 } else {
     echo "Student Email Address is not set";

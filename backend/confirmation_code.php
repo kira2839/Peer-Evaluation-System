@@ -20,21 +20,21 @@ class ConfirmationCode
 
     public function validateCode($confirmationCode, $emailAddress)
     {
-        $confirmationCodeAtDB = $this->studentModel->getConfirmationCode($emailAddress);
+        $confirmationCodeHashAtDB = $this->studentModel->getConfirmationCode($emailAddress);
 
-        if($confirmationCodeAtDB === false) {
+        if($confirmationCodeHashAtDB === false) {
             echo "Invalid Email Address/Confirmation code";
             return;
         }
 
-        $confirmationCodeAtDB = $this->studentModel->getActiveConfirmationCode($emailAddress);
-        if($confirmationCodeAtDB === false) {
+        if(!password_verify($confirmationCode, $confirmationCodeHashAtDB)) {
+            echo "Invalid Email Address/Confirmation code";
+            return;
+        }
+
+        $confirmationCodeHashAtDB = $this->studentModel->getActiveConfirmationCode($emailAddress);
+        if($confirmationCodeHashAtDB === false) {
             echo "The confirmation code is expired. Please get another code";
-            return;
-        }
-
-        if($confirmationCode !== $confirmationCodeAtDB) {
-            echo "Invalid Email Address/Confirmation code";
             return;
         }
 
