@@ -1,6 +1,6 @@
 function isValid(inputMailId) {
     clearClass();
-    var email_id = inputMailId.value.toLowerCase();
+    let email_id = inputMailId.value.toLowerCase();
 
     if (email_id.endsWith("@buffalo.edu")) {
         if (!(email_id === ".@buffalo.edu")) {
@@ -32,7 +32,7 @@ function isValid(inputMailId) {
 function postToServerForSendingMail() {
     $.ajax({
         type: "POST",
-        url: "backend/send_mail.php",
+        url: "backend/send_code.php",
         data: {email_id: document.email_form.email_id.value}
     }).done(function (msg) {
         if (msg.includes("Thank")) {
@@ -49,7 +49,7 @@ function postToServerForSendingMail() {
 
 function isValidMailAndConfirmation(inputMailId, inputConfirmationCode) {
     clearClassTab2();
-    var email_id = inputMailId.value.toLowerCase();
+    let email_id = inputMailId.value.toLowerCase();
 
     if (email_id.endsWith("@buffalo.edu")) {
         if (!(email_id === ".@buffalo.edu")) {
@@ -75,7 +75,7 @@ function isValidMailAndConfirmation(inputMailId, inputConfirmationCode) {
         return false;
     }
 
-    var confirmation_code = inputConfirmationCode.value;
+    let confirmation_code = inputConfirmationCode.value;
     if (confirmation_code.length < 0) {
         document.getElementById("confirmation_code").classList.add('ui-state-error');
         document.getElementById("error_confirmation_text").innerHTML = "Invalid confirmation code";
@@ -92,7 +92,7 @@ function isValidMailAndConfirmation(inputMailId, inputConfirmationCode) {
 function postToServerForConfirmationCodeValidation() {
     $.ajax({
         type: "POST",
-        url: "backend/confirmation_code_validation.php",
+        url: "backend/start_evaluation.php",
         data: {
             email_id_tab2: document.email_form_tab2.email_id_tab2.value,
             confirmation_code: document.email_form_tab2.confirmation_code.value

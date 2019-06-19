@@ -3,13 +3,14 @@ require('db_connector.php');
 
 class StudentModel
 {
-    private $dbConnector;
     const TABLE_NAME = "student";
     const ID_COLUMN = "id";
     const EMAIL_ADDRESS_COLUMN = "email_address";
     const CONFIRMATION_COLUMN = "confirmation_code";
     const LAST_GENERATED_TIME_COLUMN = "last_generated_time";
     const COMMA = ",";
+
+    private $dbConnector;
 
     function __construct()
     {
@@ -29,7 +30,3 @@ class StudentModel
         $stmt->close();
     }
 }
-
-#Just for testing
-$studentModel = new StudentModel();
-$studentModel->insert("smishra9@buffalo.edu", "TEST");

@@ -17,14 +17,12 @@ class DBConnector
     function __destruct()
     {
         if (isset($this->dbConnection)) {
-            echo "Disconnecting from DB ...\r\n";
             $this->dbConnection->close();
         }
     }
 
     private function dbConnect()
     {
-        echo "Connecting to DB ...\r\n";
         // Create connection
         $this->dbConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
 
@@ -34,9 +32,8 @@ class DBConnector
         }
     }
 
-    public function getDBConnection() {
+    public function getDBConnection()
+    {
         return $this->dbConnection;
     }
 }
-
-
