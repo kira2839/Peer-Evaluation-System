@@ -50,6 +50,7 @@ class DBSetup
         $sql = "CREATE TABLE student(  
                    id INT UNSIGNED AUTO_INCREMENT,
                    email_address VARCHAR(255) NOT NULL,
+                   student_name VARCHAR (255) NOT NULL,
                    confirmation_code VARCHAR(255),
                    last_generated_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    CONSTRAINT PK_STUDENT_ID PRIMARY KEY (id),
@@ -62,10 +63,10 @@ class DBSetup
         }
 
         $sql = "CREATE TABLE student_group(  
-               id INT UNSIGNED NOT NULL,
+               group_id INT UNSIGNED NOT NULL,
                fk_student_id INT UNSIGNED,
                CONSTRAINT FK_STUDENT_GROUP_ID FOREIGN KEY (fk_student_id) REFERENCES student(id),
-               CONSTRAINT PK_STUDENT_GROUP PRIMARY KEY (id, fk_student_id),
+               CONSTRAINT PK_STUDENT_GROUP PRIMARY KEY (group_id, fk_student_id),
                CONSTRAINT PK_STUDENT_ID_UNIQUE UNIQUE (fk_student_id)
             ) ENGINE=InnoDB";
         if ($this->dbConnector->getDBConnection()->query($sql) === TRUE) {
@@ -93,9 +94,12 @@ class DBSetup
         }
 
         $sql = "CREATE TABLE evaluation_meaning(  
-               key_meaning varchar(255),
-               value varchar(255),
-               CONSTRAINT PK_EVALUATION_MEANING PRIMARY KEY (key_meaning)
+               key_name varchar(255),
+               value_0 varchar(255),
+               value_1 varchar(255),
+               value_2 varchar(255),
+               value_3 varchar(255),
+               CONSTRAINT PK_EVALUATION_MEANING PRIMARY KEY (key_name)
             ) ENGINE=InnoDB";
         if ($this->dbConnector->getDBConnection()->query($sql) === TRUE) {
             echo "Table evaluation_meaning created successfully\r\n";

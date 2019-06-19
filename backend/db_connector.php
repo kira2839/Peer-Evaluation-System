@@ -3,9 +3,9 @@
 class DBConnector
 {
     private $serverName = "tethys.cse.buffalo.edu";
-    private $userName = "smishra9";
-    private $password = "welcome_123#";
-    private $databaseName = "smishra9_db";
+    private $userName = "kuduvago";
+    private $password = "50290281";
+    private $databaseName = "kuduvago_db";
 
     private $dbConnection = NULL;
 
@@ -26,7 +26,7 @@ class DBConnector
     {
         echo "Connecting to DB ...\r\n";
         // Create connection
-        $this->dbConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
+        $this->dbConnection = mysqli_connect($this->serverName, $this->userName, $this->password, $this->databaseName);
 
         // Check connection
         if ($this->dbConnection->connect_error) {
@@ -36,6 +36,10 @@ class DBConnector
 
     public function getDBConnection() {
         return $this->dbConnection;
+    }
+
+    public static function putHello(){
+        echo "<h1> Hello world</h1>";
     }
 }
 
