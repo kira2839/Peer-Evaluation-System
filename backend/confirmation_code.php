@@ -17,26 +17,7 @@ class ConfirmationCode
 
     public function generateCode($email)
     {
-        //Encrypt the email id + current timestamp
-        $encryptMethod = "AES-256-CBC";
-        $secretKey = '190oasidjo*123n-dj';
-        $secretIV = 'djo*djhoasiwdkjegfwen334';
-        $key = hash('sha256', $secretKey);
-
-        $timeInSecs = time();
-        $currentTime = date('Y-m-d H:i:s T', $timeInSecs);
-        if ($currentTime === false) {
-            return false;
-        }
-
-        $msgToBeEncrypted = $email . $currentTime;
-        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
-        $iv = substr(hash('sha256', $secretIV), 0, 16);
-        $encryptedMsg = openssl_encrypt($msgToBeEncrypted, $encryptMethod, $key, 0, $iv);
-        if ($encryptedMsg === false) {
-            return false;
-        }
-        return base64_encode($encryptedMsg);
+        return substr(base_convert(hash('sha256', uniqid(mt_rand())), 16, 36), 0, self::CONFIRMATION_CODE_SIZE);
     }
 
     public function validateCode($confirmationCode, $emailAddress)
