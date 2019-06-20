@@ -1,5 +1,8 @@
 <?php
 include_once('db_connector.php');
+include_once('student_model.php');
+include_once('student_group_model.php');
+include_once('evaluation_meaning_model.php');
 
 class DBSetup
 {
@@ -50,6 +53,7 @@ class DBSetup
         $sql = "CREATE TABLE student(  
                    id INT UNSIGNED AUTO_INCREMENT,
                    email_address VARCHAR(255) NOT NULL,
+                   student_name VARCHAR (255) NOT NULL,
                    confirmation_code VARCHAR(255),
                    last_generated_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                    is_code_used INT UNSIGNED NOT NULL DEFAULT 0,
@@ -63,10 +67,10 @@ class DBSetup
         }
 
         $sql = "CREATE TABLE student_group(  
-               id INT UNSIGNED NOT NULL,
+               group_id INT UNSIGNED NOT NULL,
                fk_student_id INT UNSIGNED,
                CONSTRAINT FK_STUDENT_GROUP_ID FOREIGN KEY (fk_student_id) REFERENCES student(id),
-               CONSTRAINT PK_STUDENT_GROUP PRIMARY KEY (id, fk_student_id),
+               CONSTRAINT PK_STUDENT_GROUP PRIMARY KEY (group_id, fk_student_id),
                CONSTRAINT PK_STUDENT_ID_UNIQUE UNIQUE (fk_student_id)
             ) ENGINE=InnoDB";
         if ($this->dbConnector->getDBConnection()->query($sql) === TRUE) {
@@ -94,9 +98,12 @@ class DBSetup
         }
 
         $sql = "CREATE TABLE evaluation_meaning(  
-               key_meaning varchar(255),
-               value varchar(255),
-               CONSTRAINT PK_EVALUATION_MEANING PRIMARY KEY (key_meaning)
+               key_name varchar(255),
+               value_0 varchar(255),
+               value_1 varchar(255),
+               value_2 varchar(255),
+               value_3 varchar(255),
+               CONSTRAINT PK_EVALUATION_MEANING PRIMARY KEY (key_name)
             ) ENGINE=InnoDB";
         if ($this->dbConnector->getDBConnection()->query($sql) === TRUE) {
             echo "Table evaluation_meaning created successfully\r\n";
@@ -104,8 +111,28 @@ class DBSetup
             echo "\r\nError creating evaluation_meaning table: " . $this->dbConnector->getDBConnection()->error . "\r\n";
         }
     }
+
+    public function seedData()
+    {
+        StudentModel::getInstance()->seedData("smishra9@buffalo.edu", "Sid");
+        StudentModel::getInstance()->seedData("a@buffalo.edu", "A");
+        StudentModel::getInstance()->seedData("b@buffalo.edu", "B");
+        StudentModel::getInstance()->seedData("gouthamt@buffalo.edu", "Goutham");
+        StudentModel::getInstance()->seedData("kuduvago@buffalo.edu", "Karthik");
+        StudentModel::getInstance()->seedData("c@buffalo.edu", "C");
+        StudentModel::getInstance()->seedData("d@buffalo.edu", "D");
+        StudentGroupModel::getInstance()->getGroupID(1,1);
+        StudentGroupModel::getInstance()->getGroupID(1,2);
+        StudentGroupModel::getInstance()->getGroupID(1,3);
+        StudentGroupModel::getInstance()->getGroupID(1,4);
+        StudentGroupModel::getInstance()->getGroupID(2,5);
+        StudentGroupModel::getInstance()->getGroupID(2,6);
+        StudentGroupModel::getInstance()->getGroupID(2,7);
+    }
+
 }
 
 $dbSetup = new DBSetup();
 $dbSetup->dropTables();
 $dbSetup->createTable();
+$dbSetup->seedData();

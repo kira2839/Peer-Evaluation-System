@@ -1,5 +1,5 @@
 <?php
-require('db_connector.php');
+include_once('db_connector.php');
 
 //Use the static method getInstance to get the object.
 class StudentModel
@@ -10,6 +10,7 @@ class StudentModel
     const CONFIRMATION_COLUMN = "confirmation_code";
     const LAST_GENERATED_TIME_COLUMN = "last_generated_time";
     const IS_CODE_USED_COLUMN = "is_code_used";
+    const STUDENT_NAME_COLUMN = "student_name";
     const COMMA = ",";
     const EQUAL = "=";
     const TIME_FOR_CODE_EXPIRY_IN_MIN = 15;
@@ -36,6 +37,20 @@ class StudentModel
         }
 
         return self::$instance;
+    }
+
+    public function seedData($email, $name)
+    {
+        //Insert into student table
+        $sql = "INSERT INTO " . self::TABLE_NAME .
+            "(" . self::EMAIL_ADDRESS_COLUMN . self::COMMA . self::STUDENT_NAME_COLUMN . ") values (?, ?)";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('ss', $email, $name);
+        $return = $stmt->execute();
+        $stmt->close();
+        return $return;
+
     }
 
     public function insert($email, $confirmationCode)
@@ -71,7 +86,7 @@ class StudentModel
 
     public function getActiveConfirmationCode($email)
     {
-        $code=NULL;
+        $code = NULL;
         //Select confirmation code from student table
         $sql = "SELECT " . self::CONFIRMATION_COLUMN .
             " FROM " . self::TABLE_NAME . " WHERE " .
@@ -88,7 +103,7 @@ class StudentModel
             return false;
         }
 
-        while($stmt->fetch()){
+        while ($stmt->fetch()) {
             $stmt->close();
             return $code;
         }
@@ -97,7 +112,7 @@ class StudentModel
 
     public function getConfirmationCode($email)
     {
-        $code=NULL;
+        $code = NULL;
         //Select confirmation code from student table
         $sql = "SELECT " . self::CONFIRMATION_COLUMN .
             " FROM " . self::TABLE_NAME . " WHERE " .
@@ -112,7 +127,7 @@ class StudentModel
             return false;
         }
 
-        while($stmt->fetch()){
+        while ($stmt->fetch()) {
             $stmt->close();
             return $code;
         }
@@ -130,5 +145,51 @@ class StudentModel
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $stmt->close();
+    }
+
+    public function getStudentId($email)
+    {
+        $id = NULL;
+        //Select confirmation code from student table
+        $sql = "SELECT " . self::ID_COLUMN .
+            " FROM " . self::TABLE_NAME . " WHERE " .
+            self::EMAIL_ADDRESS_COLUMN . self::EQUAL . " ?";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('s', $email);
+        $stmt->bind_result($id);
+        $result = $stmt->execute();
+        if ($result === false) {
+            return false;
+        }
+
+        while ($stmt->fetch()) {
+            $stmt->close();
+            return $id;
+        }
+        return false;
+    }
+
+    public function getStudentName($id)
+    {
+        $studentName = NULL;
+        //Select confirmation code from student table
+        $sql = "SELECT " . self::STUDENT_NAME_COLUMN .
+            " FROM " . self::TABLE_NAME . " WHERE " .
+            self::ID_COLUMN . self::EQUAL . " ?";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('d', $id);
+        $stmt->bind_result($studentName);
+        $result = $stmt->execute();
+        if ($result === false) {
+            return false;
+        }
+
+        while ($stmt->fetch()) {
+            $stmt->close();
+            return $studentName;
+        }
+        return false;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 //Use the static method getInstance to get the object
 class Session
 {
