@@ -44,7 +44,7 @@ class StudentModel
         $sql = "INSERT INTO " . self::TABLE_NAME .
             "(" . self::EMAIL_ADDRESS_COLUMN . self::COMMA . self::CONFIRMATION_COLUMN . ") values (?, ?)";
 
-        $confirmationCode = password_hash($confirmationCode, PASSWORD_DEFAULT);
+        $confirmationCode = hash('sha256', $confirmationCode);
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
         $stmt->bind_param('ss', $email, $confirmationCode);
         $return = $stmt->execute();
@@ -62,7 +62,7 @@ class StudentModel
             self::COMMA . self::IS_CODE_USED_COLUMN . self::EQUAL . " 0 WHERE " .
             self::EMAIL_ADDRESS_COLUMN . self::EQUAL . "?";
 
-        $confirmationCode = password_hash($confirmationCode, PASSWORD_DEFAULT);
+        $confirmationCode = hash('sha256', $confirmationCode);
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
         $stmt->bind_param('ss', $confirmationCode, $email);
         $stmt->execute();
