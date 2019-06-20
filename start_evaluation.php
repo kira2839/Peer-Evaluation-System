@@ -88,7 +88,8 @@ EOC1;
 echo<<<EOC2
     <input type="submit" value="Submit Ratings" onclick="getData()">
 </form>
-
+<script src="jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+<script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script type="text/javascript">
 function getData(){
     var i,j = 0;
@@ -104,7 +105,7 @@ function getData(){
     leader = parseInt(getSelectData("leadership_",i));
     part = parseInt(getSelectData("participation_",i));
     proff = parseInt(getSelectData("professionalism_",i));
-    quality = parseInt(getSelectData("quality_",i));
+    quality = parseInt(getSelectData("quality_",i));    
     row.push(group_no);
     row.push(i);
     row.push(role);
@@ -132,7 +133,7 @@ function postToPHPforInsertion(data) {
             form_data: data
         }
     }).done(function (msg) {
-        alert('test');
+        alert(msg);
     });
 }
 </script>
