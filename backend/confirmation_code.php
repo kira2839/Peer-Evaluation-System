@@ -27,7 +27,7 @@ class ConfirmationCode
             return false;
         }
 
-        if(!password_verify($confirmationCode, $confirmationCodeHashAtDB)) {
+        if(hash('sha256', $confirmationCode) !== $confirmationCodeHashAtDB) {
             echo "Invalid Email Address/Confirmation code";
             return false;
         }
