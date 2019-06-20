@@ -19,7 +19,7 @@ if (isset($_POST['email_id'])) {
         return;
     }
 
-    $studentModel = new StudentModel();
+    $studentModel = StudentModel::getInstance();
     if($studentModel->insert($email->getEmailAddress(), $code) === false) {
         $studentModel->update($email->getEmailAddress(), $code);
     }

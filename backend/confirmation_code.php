@@ -10,7 +10,7 @@ class ConfirmationCode
 
     function __construct()
     {
-        $this->studentModel = new StudentModel();
+        $this->studentModel = StudentModel::getInstance();
     }
 
     public function generateCode()

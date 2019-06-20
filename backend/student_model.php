@@ -1,6 +1,7 @@
 <?php
 require('db_connector.php');
 
+//Use the static method getInstance to get the object.
 class StudentModel
 {
     const TABLE_NAME = "student";
@@ -15,9 +16,26 @@ class StudentModel
 
     private $dbConnector;
 
-    function __construct()
+    // The only instance of the class
+    private static $instance;
+
+    private function __construct()
     {
         $this->dbConnector = new DBConnector();
+    }
+
+    /**
+     *    Returns The instance of 'Session'.
+     *    The session is automatically initialized if it wasn't.
+     * @return    object
+     **/
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
     }
 
     public function insert($email, $confirmationCode)
@@ -40,7 +58,8 @@ class StudentModel
         //Update entry at student table
         $sql = "UPDATE " . self::TABLE_NAME .
             " SET " . self::CONFIRMATION_COLUMN . self::EQUAL . "? " . self::COMMA .
-            self::LAST_GENERATED_TIME_COLUMN . self::EQUAL . "CURRENT_TIMESTAMP WHERE " .
+            self::LAST_GENERATED_TIME_COLUMN . self::EQUAL . "CURRENT_TIMESTAMP " .
+            self::COMMA . self::IS_CODE_USED_COLUMN . self::EQUAL . " 0 WHERE " .
             self::EMAIL_ADDRESS_COLUMN . self::EQUAL . "?";
 
         $confirmationCode = password_hash($confirmationCode, PASSWORD_DEFAULT);
@@ -98,5 +117,18 @@ class StudentModel
             return $code;
         }
         return false;
+    }
+
+    public function markConfirmationCodeAsUsed($email)
+    {
+        //Update entry at student table
+        $sql = "UPDATE " . self::TABLE_NAME .
+            " SET " . self::IS_CODE_USED_COLUMN . self::EQUAL . "1 WHERE " .
+            self::EMAIL_ADDRESS_COLUMN . self::EQUAL . "?";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $stmt->close();
     }
 }
