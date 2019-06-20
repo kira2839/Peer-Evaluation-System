@@ -107,11 +107,10 @@ EOC1;
 echo<<<EOC2
 
 
-    
-        <button onclick="return isValid(document.email_form.email_id)" id="button"
-                    class="ui-button ui-corner-all ui-widget">Submit Ratings
-            </button>
+    <input type="submit" value="Submit Ratings" onclick="getData()">
 </form>
+<script src="jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+<script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script type="text/javascript">
 function getData(){
     var i,j = 0;
@@ -127,7 +126,7 @@ function getData(){
     leader = parseInt(getSelectData("leadership_",i));
     part = parseInt(getSelectData("participation_",i));
     proff = parseInt(getSelectData("professionalism_",i));
-    quality = parseInt(getSelectData("quality_",i));
+    quality = parseInt(getSelectData("quality_",i));    
     row.push(group_no);
     row.push(i);
     row.push(role);
@@ -146,6 +145,7 @@ function getSelectData(str,i){
     var elt = document.getElementById(id);
     return elt.options[elt.selectedIndex].value;
 }
+
 function postToPHPforInsertion(data) {
     $.ajax({
         type: "POST",
@@ -154,7 +154,7 @@ function postToPHPforInsertion(data) {
             form_data: data
         }
     }).done(function (msg) {
-        alert('test');
+        alert(msg);
     });
 }
 </script>
