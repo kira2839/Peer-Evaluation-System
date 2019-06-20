@@ -99,9 +99,7 @@ function postToServerForConfirmationCodeValidation() {
         }
     }).done(function (msg) {
         if (msg.includes("Validated")) {
-            document.getElementById("from_server_cr_text").innerHTML = msg;
-            document.getElementById("from_server_cr_span").classList.add('ui-icon');
-            document.getElementById("from_server_cr_span").classList.add('ui-icon-circle-check');
+            window.location.href = "backend/start_evaluation.php";
         } else {
             document.getElementById("error_text_tab2").innerHTML = msg;
             document.getElementById("error_span_tab2").classList.add('ui-icon');

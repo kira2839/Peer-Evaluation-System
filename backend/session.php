@@ -46,9 +46,7 @@ class Session
             ini_set('session.use_only_cookies', 1);
 
             session_name(self::COOKIE_NAME);
-            $this->sessionState = session_start([
-                'cookie_lifetime' => self::SESSION_EXPIRE_TIME_IN_SEC,
-            ]);
+            $this->sessionState = session_start();
         }
 
         return $this->sessionState;

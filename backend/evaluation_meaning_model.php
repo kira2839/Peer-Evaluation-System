@@ -67,15 +67,12 @@ class EvaluationMeaningModel
         $sql = "SELECT * FROM " .
             self::TABLE_NAME . " ORDER BY " . self::KEY_NAME_COLUMN;
 
-        echo $sql;
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
         $stmt->bind_result($keyName, $value0, $value1, $value2, $value3);
         $result = $stmt->execute();
-        echo "test";
         if ($result === false) {
             return false;
         }
-        echo "ff";
 
         while ($stmt->fetch()) {
             array_push($oneRow, $keyName, $value0, $value1, $value2, $value3);
@@ -84,7 +81,6 @@ class EvaluationMeaningModel
         }
 
         $stmt->close();
-        print_r($evaluationMeaning);
         return $evaluationMeaning;
     }
 }
