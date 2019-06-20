@@ -1,6 +1,5 @@
 <?php
 include ("./backend/db_connector.php");
-
 // Common variables
 $group_no = 1;
 $db_connection = new DBConnector();
@@ -17,12 +16,33 @@ $prof = getProfessionalism($connection);
 $lead = getLeadership($connection);
 $quality = getQuality($connection);
 
+echo <<<EOC5
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link href="./jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+    <link href="main_site.css" type="text/css" rel="stylesheet">
+    <link href="table_stylesheet.css" type="text/css" rel="stylesheet">
+    <title>Peer Evaluations</title>
+</head>
+<div id="nav-bar">
+    <ul class="nav_bar">
+        <li class="bar_li">
+            <a href="./index.html" aria-label="UB logo"><i class="icon icon-ub-logo"></i>
+                <img class="logo-black" src="./ub_logo.png" alt="University at Buffalo print logo">
+                <span class="ub-logo">Peer Evaluations</span>
+            </a></li>
+        <li style="float:right" class="bar_li"><a class="about orange" href="./about_us.html">About Us</a></li>
+    </ul>
+</div>
+
+EOC5;
 for($i=$student_ids[0];$i<$student_ids[0]+$student_count;$i++) {
     echo <<<EOC
     <title>Start Evaluation</title>
     <form name="start_eval">
 EOC;
-
     echo <<< EOC1
     <h2>$student_details[$i] </h2>
     <table style="width:100%">
@@ -32,7 +52,7 @@ EOC;
       </tr>
       <tr>
         <td>Role</td>
-        <td><select id="role_$i">
+        <td><select id="role_$i" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
       <option value="0">$roles[0]</option>
       <option value="1">$roles[1]</option>
       <option value="2">$roles[2]</option>
@@ -43,7 +63,7 @@ EOC;
       
       <tr>
         <td>Leadership</td>
-        <td><select id="leadership_$i">
+        <td><select id="leadership_$i" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
       <option value="0">$lead[0]</option>
       <option value="1">$lead[1]</option>
       <option value="2">$lead[2]</option>
@@ -54,7 +74,7 @@ EOC;
       
       <tr>
         <td>Participation</td>
-        <td><select id="participation_$i">
+        <td><select id="participation_$i" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
       <option value="0">$part[0]</option>
       <option value="1">$part[1]</option>
       <option value="2">$part[2]</option>
@@ -64,7 +84,7 @@ EOC;
       
       <tr>
         <td>Professionalism</td>
-        <td><select id="professionalism_$i">
+        <td><select id="professionalism_$i" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
       <option value="0">$prof[0]</option>
       <option value="1">$prof[1]</option>
       <option value="2">$prof[2]</option>
@@ -74,7 +94,7 @@ EOC;
       
       <tr>
         <td>Quality</td>
-        <td><select id="quality_$i">
+        <td><select id="quality_$i" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
       <option value="0">$quality[0]</option>
       <option value="1">$quality[1]</option>
       <option value="2">$quality[2]</option>
@@ -83,13 +103,15 @@ EOC;
       </tr>
     </table>
 EOC1;
-
 }
 echo<<<EOC2
-    <input type="submit" value="Submit Ratings" onclick="getData()">
+
+
+    
+        <button onclick="return isValid(document.email_form.email_id)" id="button"
+                    class="ui-button ui-corner-all ui-widget">Submit Ratings
+            </button>
 </form>
-<script src="jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
-<script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script type="text/javascript">
 function getData(){
     var i,j = 0;
@@ -105,7 +127,7 @@ function getData(){
     leader = parseInt(getSelectData("leadership_",i));
     part = parseInt(getSelectData("participation_",i));
     proff = parseInt(getSelectData("professionalism_",i));
-    quality = parseInt(getSelectData("quality_",i));    
+    quality = parseInt(getSelectData("quality_",i));
     row.push(group_no);
     row.push(i);
     row.push(role);
@@ -124,7 +146,6 @@ function getSelectData(str,i){
     var elt = document.getElementById(id);
     return elt.options[elt.selectedIndex].value;
 }
-
 function postToPHPforInsertion(data) {
     $.ajax({
         type: "POST",
@@ -133,19 +154,17 @@ function postToPHPforInsertion(data) {
             form_data: data
         }
     }).done(function (msg) {
-        alert(msg);
+        alert('test');
     });
 }
 </script>
 EOC2;
-
 function getCountInGroup($connection,$group_no){
     $query = "SELECT count(fk_student_id) as student_count FROM `student_group` WHERE group_id = $group_no";
     $result= mysqli_query($connection, $query);
     $student_count = $result -> fetch_assoc()['student_count'];
     return $student_count;
 }
-
 function getStudentIDInGroup($connection,$group_no){
     //Getting the ids of all the students within the group
     $query = "SELECT `fk_student_id` as student_ids FROM `student_group` WHERE group_id = $group_no";
@@ -156,7 +175,6 @@ function getStudentIDInGroup($connection,$group_no){
     }
     return $student_ids;
 }
-
 function getStudentNameInGroup($connection,$student_count,$student_ids){
     // Getting the student names using the student ids within the group
     $student_names = [];
@@ -168,7 +186,6 @@ function getStudentNameInGroup($connection,$student_count,$student_ids){
     }
 return $student_names;
 }
-
 function getRoles($connection)
 {
     $roles = [];
@@ -180,7 +197,6 @@ function getRoles($connection)
     }
     return $roles;
 }
-
 function getLeadership($connection)
 {
     $roles = [];
@@ -192,7 +208,6 @@ function getLeadership($connection)
     }
     return $roles;
 }
-
 function getParticipation($connection)
 {
     $roles = [];
@@ -204,7 +219,6 @@ function getParticipation($connection)
     }
     return $roles;
 }
-
 function getProfessionalism($connection)
 {
     $roles = [];
@@ -216,7 +230,6 @@ function getProfessionalism($connection)
     }
     return $roles;
 }
-
 function getQuality($connection)
 {
     $roles = [];
@@ -228,5 +241,4 @@ function getQuality($connection)
     }
     return $roles;
 }
-
 ?>
