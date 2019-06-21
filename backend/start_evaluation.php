@@ -39,37 +39,15 @@ $part = $evaluation_meaning[1];
 $prof = $evaluation_meaning[2];
 $quality = $evaluation_meaning[3];
 
-echo <<<EOC5
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <link href="../jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
-    <link href="../start-evaluation.css" type="text/css" rel="stylesheet">
-    <link href="../table_stylesheet.css" type="text/css" rel="stylesheet">
-    <title>Peer Evaluations</title>
-</head>
-<div id="nav-bar">
-    <ul class="nav_bar">
-        <li class="bar_li">
-            <a href="../index.html" aria-label="UB logo"><i class="icon icon-ub-logo"></i>
-                <img class="logo-black" src="../ub_logo.png" alt="University at Buffalo print logo">
-                <span class="ub-logo">Peer Evaluations</span>
-            </a></li>
-        <li style="float:right" class="bar_li"><a class="about orange" href="../about_us.html">About Us</a></li>
-    </ul>
-</div>
-
-EOC5;
+include("main_site_header.html");
 
 foreach ($group_members_id as $index => $student_id) {
     echo <<<EOC
-    <title>Start Evaluation</title>
     <form name="start_eval">
 EOC;
     echo <<< EOC1
-    <h2>$group_members_names[$index] </h2>
-    <table style="width:100%">
+    <h2 class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-top">$group_members_names[$index] </h2>
+    <table class="ui-datepicker-calendar ui-widget ui-widget-content ui-corner-bottom" style="width:100%">
       <tr>
         <th>Category</th>
         <th>Ratings</th> 
@@ -126,12 +104,15 @@ EOC;
       </select></td>
       </tr>
     </table>
+<br>
 EOC1;
 }
-echo<<<EOC2
+echo <<<EOC2
 
 
-    <input class="ui-button ui-corner-all ui-widget" type="submit" value="Submit Ratings" onclick="getData()">
+    <button onclick="return getData()" id="button"
+                        class="ui-button ui-corner-all ui-widget">Submit Ratings
+    </button>
 </form>
 <script src="../jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
 <script src="../jquery-ui-1.12.1.custom/jquery-ui.js"></script>
