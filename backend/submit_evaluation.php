@@ -18,6 +18,21 @@ if (isset($_POST['form_data'])) {
     $count = count($form_data);
     $insertSuccess = true;
     $insertSuccess = $insertSuccess & insertIntoTable($form_data);
+    if ($insertSuccess) {
+        echo <<<EOC
+    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; display: inline-block;">
+		<p><span class="ui-icon ui-icon-circle-check" style="float: left; margin-right: .3em;"></span>
+		Successfully submitted your evaluation. A confirmation email has been sent</p>
+	</div>
+EOC;
+    } else {
+        echo <<<EOC
+    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; display: inline-block;">
+		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+		Failed to submit your evaluation. Please try again</p>
+	</div>
+EOC;
+    }
 }
 
 function insertIntoTable($form_data)

@@ -102,6 +102,8 @@ function postToPHPforInsertion(data) {
             form_data: data
         }
     }).done(function (msg) {
+        document.getElementById("student_eval").innerHTML = "";
+        document.getElementById("student_eval").innerHTML = msg;
         return false;
     });
     return true;
