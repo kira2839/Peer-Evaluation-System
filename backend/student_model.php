@@ -192,5 +192,32 @@ class StudentModel
         }
         return false;
     }
-    
+
+    public function checkStudentEmail($email)
+    {
+        $studentCount = NULL;
+
+        //Check if student email exist
+        $sql = "SELECT COUNT(*) " .
+            " FROM " . self::TABLE_NAME . " WHERE LOWER(" .
+            self::EMAIL_ADDRESS_COLUMN . ")" . self::EQUAL . "LOWER(?)";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('s', $email);
+        $stmt->bind_result($studentCount);
+        $result = $stmt->execute();
+        if ($result === false) {
+            return false;
+        }
+
+        while ($stmt->fetch()) {
+            $stmt->close();
+            if ($studentCount == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
 }

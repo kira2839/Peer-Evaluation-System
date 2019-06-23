@@ -9,7 +9,13 @@ class Email
 
     function __construct($emailAddress)
     {
-        $this->emailAddress = $emailAddress;
+        //Remove the white spaces and tab if it contains
+        $this->emailAddress = trim($emailAddress);
+    }
+
+    public function isStudentPartOfEvaluationSystem()
+    {
+        return StudentModel::getInstance()->checkStudentEmail($this->emailAddress);
     }
 
     public function validateEmailAddress()

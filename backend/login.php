@@ -20,6 +20,11 @@ if (!isset($_POST['confirmation_code'])) {
 $email = new Email($_POST['email_id_tab2']);
 $confirmationCode = new ConfirmationCode();
 
+if ($email->isStudentPartOfEvaluationSystem() === false) {
+    echo "Invalid Email Address/Confirmation code";
+    return;
+}
+
 if ($email->validateEmailAddress() === false) {
     echo "Invalid Email Address/Confirmation code";
     return;
