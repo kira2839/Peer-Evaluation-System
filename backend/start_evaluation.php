@@ -1,152 +1,95 @@
 <?php
 
+include_once('website_page_handle.php');
 include_once('session.php');
 include_once('student_model.php');
 include_once('student_group_model.php');
 include_once('evaluation_meaning_model.php');
-// We get the created session instance if already
+
+// We get the created session instance which is created earlier then proceed or error out
 $sessionObj = Session::getInstance();
 
-if (!isset($_SESSION['email_id']) OR ($_SESSION['agent'] != sha1($_SERVER['HTTP_USER_AGENT']))) {
-    echo "Session is invalid";
-    //$sessionObj->destroy();
-    //Utility::redirectUser("index.html");
+if (!$sessionObj->isSessionValid()) {
+    $sessionObj->destroy();
+    $sessionObj->displaySessionExpiredMessage();
     return;
 }
 
-//echo $sessionObj->student_id;
-//echo $sessionObj->name;
-//echo $sessionObj->group_id;
+//Start creating the html tags
+WebSitePageHandle::includeSiteHeader();
 
-$group_members_id = StudentGroupModel::getInstance()->getGroupMembersID($sessionObj->group_id);
-$group_members_names = array();
-foreach ($group_members_id as $val) {
-    array_push($group_members_names, StudentModel::getInstance()->getStudentName($val));
-}
+echo <<<EOC1
+    <form id="student_eval" name="start_eval">
+EOC1;
 
-$group_members_count = count($group_members_id);
+$group_members_names = $sessionObj->group_members_names;
+$group_members_count = count($sessionObj->group_members_id);
+$category_count = count($sessionObj->evaluation_meaning);
 
-//print_r($evaluation_meaning);
-//print_r($group_members_id);
-//print_r($group_members_names);
-
-$evaluation_meaning = EvaluationMeaningModel::getInstance()->getAllData();
-//print_r($evaluation_meaning);
-
-$roles = $evaluation_meaning[4];
-$lead = $evaluation_meaning[0];
-$part = $evaluation_meaning[1];
-$prof = $evaluation_meaning[2];
-$quality = $evaluation_meaning[3];
-
-include("main_site_header.html");
-
-foreach ($group_members_id as $index => $student_id) {
-    echo <<<EOC
-    <form name="start_eval">
-EOC;
-    echo <<< EOC1
-    <h2 class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-top">$group_members_names[$index] </h2>
+foreach ($sessionObj->group_members_id as $index => $group_member) {
+    echo <<< EOC2
+    <li id="group_member_$index" value="$group_member" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-top">$group_members_names[$index]</li>
     <table class="ui-datepicker-calendar ui-widget ui-widget-content ui-corner-bottom" style="width:100%">
       <tr>
         <th>Category</th>
         <th>Ratings</th> 
       </tr>
-      <tr>
-        <td>Role</td>
-        <td><select id="role_$index" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
-      <option value="0">$roles[1]</option>
-      <option value="1">$roles[2]</option>
-      <option value="2">$roles[3]</option>
-      <option value="3">$roles[4]</option>
-      </select></td>
-        
-      </tr>
-      
-      <tr>
-        <td>Leadership</td>
-        <td><select id="leadership_$index" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
-      <option value="0">$lead[1]</option>
-      <option value="1">$lead[2]</option>
-      <option value="2">$lead[3]</option>
-      <option value="3">$lead[4]</option>
-      </select></td>
-        
-      </tr>
-      
-      <tr>
-        <td>Participation</td>
-        <td><select id="participation_$index" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
-      <option value="0">$part[1]</option>
-      <option value="1">$part[2]</option>
-      <option value="2">$part[3]</option>
-      <option value="3">$part[4]</option>
-      </select></td>
-      </tr>
-      
-      <tr>
-        <td>Professionalism</td>
-        <td><select id="professionalism_$index" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
-      <option value="0">$prof[1]</option>
-      <option value="1">$prof[2]</option>
-      <option value="2">$prof[3]</option>
-      <option value="3">$prof[4]</option>
-      </select></td>
-      </tr>
-      
-      <tr>
-        <td>Quality</td>
-        <td><select id="quality_$index" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
-      <option value="0">$quality[1]</option>
-      <option value="1">$quality[2]</option>
-      <option value="2">$quality[3]</option>
-      <option value="3">$quality[4]</option>
-      </select></td>
-      </tr>
+EOC2;
+    foreach ($sessionObj->evaluation_meaning as $catIndex => $ratings) {
+        echo <<< EOC31
+        <tr>
+        <td>$ratings[0]</td>
+        <td><select id="category_$catIndex$index" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget">
+EOC31;
+        for ($ratingIndex = 1; $ratingIndex < count($ratings); $ratingIndex++) {
+            $ratingValue = $ratingIndex - 1;
+            echo <<< EOC32
+                <option value="$ratingValue">$ratings[$ratingIndex]</option>
+EOC32;
+        }
+        echo <<< EOC33
+        </select></td>
+        </tr>
+EOC33;
+    }
+    echo <<< EOC4
     </table>
 <br>
-EOC1;
+EOC4;
 }
-echo <<<EOC2
 
-
-    <button onclick="return getData()" id="button"
+echo <<<EOC5
+    <button onclick="return getData(event)" id="button"
                         class="ui-button ui-corner-all ui-widget">Submit Ratings
     </button>
 </form>
 <script src="../jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
 <script src="../jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script type="text/javascript">
-function getData(){
-    var i,j = 0;
+
+function getData(event){
+    event.preventDefault();
     var data=[];
-    var first_id = 0;
     var student_count = $group_members_count;
-    var group_no = $sessionObj->group_id;    
+    var category_count = $category_count;
+    var student_id = $sessionObj->student_id;
+
+    for(var group_member_index=0; group_member_index < student_count; group_member_index++) {
+        var row = [];
+        row.push(student_id);
+        row.push(document.getElementById("group_member_"+group_member_index).value);
+        
+        for(var cat_index=0; cat_index < category_count; cat_index++) {
+            row.push(parseInt(getSelectData("category_",cat_index, group_member_index)));
+        }
+        data.push(row);
+    }
     
-    for(i=first_id; i<(first_id+student_count) ;i++){
-    var role,leader,part,proff,quality=0;
-    var row = [];
-    role = parseInt(getSelectData("role_",i));
-    leader = parseInt(getSelectData("leadership_",i));
-    part = parseInt(getSelectData("participation_",i));
-    proff = parseInt(getSelectData("professionalism_",i));
-    quality = parseInt(getSelectData("quality_",i));    
-    row.push(group_no);
-    row.push(i+1);
-    row.push(role);
-    row.push(leader);
-    row.push(part);
-    row.push(proff);
-    row.push(quality);
-    data.push(row);
-    j=j+1;
-    }
     postToPHPforInsertion(data);
-    }
+}
  
-function getSelectData(str,i){
-    var id = str+i;
+function getSelectData(str, i, j){
+    var id = str+i+j;
     var elt = document.getElementById(id);
     return elt.options[elt.selectedIndex].value;
 }
@@ -159,8 +102,9 @@ function postToPHPforInsertion(data) {
             form_data: data
         }
     }).done(function (msg) {
-        alert(msg);
+        return false;
     });
+    return true;
 }
 </script>
-EOC2;
+EOC5;

@@ -57,7 +57,7 @@ class StudentModel
     {
         //Insert into student table
         $sql = "INSERT INTO " . self::TABLE_NAME .
-            "(" . self::EMAIL_ADDRESS_COLUMN . self::COMMA . self::CONFIRMATION_COLUMN . ") values (?, ?)";
+            "(" . self::EMAIL_ADDRESS_COLUMN . self::COMMA . self::CONFIRMATION_COLUMN . ") values (LOWER(?), ?)";
 
         $confirmationCode = hash('sha256', $confirmationCode);
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
@@ -192,4 +192,5 @@ class StudentModel
         }
         return false;
     }
+    
 }

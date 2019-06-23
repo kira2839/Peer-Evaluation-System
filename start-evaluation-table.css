@@ -25,6 +25,7 @@ table thead th {
     color: #FFFFFF;
     border-left: 2px solid #FFFFFF;
 }
+
 table thead th:first-child {
     border-left: none;
 }
@@ -36,6 +37,7 @@ table tfoot {
     background: #D0E4F5;
     border-top: 3px solid #444444;
 }
+
 table tfoot td {
     font-size: 14px;
 }

@@ -1,6 +1,12 @@
 <?php
 
+include_once("website_page_handle.php");
 //Use the static method getInstance to get the object
+
+/**
+ * @property mixed created_time
+ * @property mixed agent
+ */
 class Session
 {
     const SESSION_STARTED = TRUE;

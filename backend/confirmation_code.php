@@ -22,18 +22,18 @@ class ConfirmationCode
     {
         $confirmationCodeHashAtDB = $this->studentModel->getConfirmationCode($emailAddress);
 
-        if($confirmationCodeHashAtDB === false) {
+        if ($confirmationCodeHashAtDB === false) {
             echo "Invalid Email Address/Confirmation code";
             return false;
         }
 
-        if(hash('sha256', $confirmationCode) !== $confirmationCodeHashAtDB) {
+        if (hash('sha256', $confirmationCode) !== $confirmationCodeHashAtDB) {
             echo "Invalid Email Address/Confirmation code";
             return false;
         }
 
         $confirmationCodeHashAtDB = $this->studentModel->getActiveConfirmationCode($emailAddress);
-        if($confirmationCodeHashAtDB === false) {
+        if ($confirmationCodeHashAtDB === false) {
             echo "The confirmation code is expired. Please get another code";
             return false;
         }

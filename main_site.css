@@ -12,17 +12,18 @@ h1 {
 }
 
 .orange:hover {
-    background: #a11b0a;}
+    background: #a11b0a;
+}
 
 .orange {
     background: #da3c28;
-    border: 1px solid rgba(255,255,255,0);
+    border: 1px solid rgba(255, 255, 255, 0);
     border-color: #e98a84;
 }
 
 .about {
     display: inline-block;
-    font: 12px/1.2 Sofia,Arial,sans-serif;
+    font: 12px/1.2 Sofia, Arial, sans-serif;
     text-decoration: none;
     padding: 6px 10px 4px;
     color: #fff;
@@ -37,9 +38,9 @@ h1 {
     border: 1px solid;
 }
 
-.contact_us{
+.contact_us {
     display: inline-block;
-    font: 20px/1.2 Sofia,Arial,sans-serif;
+    font: 20px/1.2 Sofia, Arial, sans-serif;
     text-decoration: none;
     padding: 6px 10px 4px;
     color: #fff;
@@ -62,11 +63,11 @@ h1 {
     padding-top: auto;
     padding-bottom: auto;
     text-decoration: none;
-    background-size:100% auto;
+    background-size: 100% auto;
 }
 
 .ub-logo {
-    font: 30px Kievit,Sofia,Arial,sans-serif;
+    font: 30px Kievit, Sofia, Arial, sans-serif;
     float: left;
     color: #fff;
     white-space: nowrap;
@@ -76,11 +77,11 @@ h1 {
 .logo-black {
     background-repeat: no-repeat;
     background-color: #015BBB;
-    background-size:100% auto;
+    background-size: 100% auto;
     width: 20%;
     height: 20%;
-    max-width:100%;
-    max-height:100%;
+    max-width: 100%;
+    max-height: 100%;
     size: auto;
     float: left;
     padding-bottom: 1%;
@@ -89,7 +90,7 @@ h1 {
 .show_msg {
     color: darkorange;
     text-align: center;
-    font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
+    font-family: 'Google Sans', 'Noto Sans Myanmar UI', arial, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.3333;
@@ -120,7 +121,7 @@ body {
     text-align: center;
     background: url("ub_background.jpg");
     background-repeat: no-repeat;
-    background-size:100% auto;
+    background-size: 100% auto;
     background-color: #015BBB;
 }
 

@@ -50,7 +50,7 @@ class StudentGroupModel
     {
         //Update entry at student table
         $sql = "UPDATE " . self::TABLE_NAME .
-            " SET " . self::GROUP_ID_COLUMN . self::EQUAL . "? " . self::COMMA .
+            " SET " . self::GROUP_ID_COLUMN . self::EQUAL . "?" .
             " WHERE " . self::STUDENT_ID_COLUMN . self::EQUAL . "?";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
