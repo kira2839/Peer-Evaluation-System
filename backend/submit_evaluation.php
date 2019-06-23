@@ -33,6 +33,7 @@ EOC;
 	</div>
 EOC;
     }
+    $sessionObj->destroy();
 }
 
 function insertIntoTable($form_data)
