@@ -7,6 +7,12 @@ include_once("student_evaluation_model.php");
 // We get the created session instance which is created earlier then proceed or error out
 $sessionObj = Session::getInstance();
 
+if (!$sessionObj->isSessionValid()) {
+    $sessionObj->destroy();
+    $sessionObj->displaySessionExpiredMessage();
+    return;
+}
+
 if (isset($_POST['form_data'])) {
     $form_data = $_POST['form_data'];
     $count = count($form_data);

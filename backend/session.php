@@ -58,6 +58,18 @@ class Session
         return $this->sessionState;
     }
 
+    public function isSessionValid()
+    {
+        if (!isset($this->email_id) OR
+            ($this->agent != sha1($_SERVER['HTTP_USER_AGENT'])) OR
+            !isset($this->created_time) OR
+            (time() - $this->created_time > self::SESSION_EXPIRE_TIME_IN_SEC)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      *    Stores datas in the session.
      *    Example: $instance->foo = 'bar';
