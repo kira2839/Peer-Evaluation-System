@@ -39,6 +39,7 @@ function postToServerForSendingMail() {
             document.getElementById("from_server_text").innerHTML = msg;
             document.getElementById("from_server_span").classList.add('ui-icon');
             document.getElementById("from_server_span").classList.add('ui-icon-circle-check');
+            document.getElementById("email_id").value = "";
         } else {
             document.getElementById("error_text").innerHTML = msg;
             document.getElementById("error_span").classList.add('ui-icon');
