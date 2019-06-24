@@ -29,7 +29,7 @@ if (isset($_POST['email_id'])) {
         $studentModel->update($email->getEmailAddress(), $code);
     }
 
-    $email->sendMail($code);
+    $email->sendCodeMail($code);
 } else {
     echo "Student Email Address is not set";
 }

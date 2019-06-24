@@ -11,6 +11,7 @@ $sessionObj = Session::getInstance();
 
 if (!$sessionObj->isSessionValid()) {
     $sessionObj->destroy();
+    WebSitePageHandle::includeSiteHeader();
     $sessionObj->displaySessionExpiredMessage();
     return;
 }

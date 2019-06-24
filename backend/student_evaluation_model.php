@@ -83,7 +83,6 @@ class StudentEvaluationModel
         $quality = NULL;
 
         $evaluation = array();
-        $oneRow = array();
 
         //Select confirmation code from student table
         $sql = "SELECT " . self::ROLE_COLUMN .
@@ -104,9 +103,8 @@ class StudentEvaluationModel
         }
 
         while ($stmt->fetch()) {
-            array_push($oneRow, $role, $leadership, $participation, $professionalism, $quality);
-            array_push($evaluation, $oneRow);
-            $oneRow = array();
+            array_push($evaluation, $role, $leadership, $participation, $professionalism, $quality);
+            break;
         }
 
         $stmt->close();
