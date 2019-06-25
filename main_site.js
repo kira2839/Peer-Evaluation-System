@@ -129,8 +129,4 @@ function clearClassTab2() {
     document.getElementById("error_confirmation_text").innerHTML = "";
     document.getElementById("error_confirmation_span").classList.remove('ui-icon-alert');
     document.getElementById("error_confirmation_span").classList.remove('ui-icon');
-
-    document.getElementById("from_server_cr_text").innerHTML = "";
-    document.getElementById("from_server_cr_span").classList.remove('ui-icon-circle-check');
-    document.getElementById("from_server_cr_span").classList.remove('ui-icon');
 }

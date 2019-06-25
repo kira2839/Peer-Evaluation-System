@@ -87,6 +87,7 @@ class DBSetup
                participation INT UNSIGNED,
                professionalism INT UNSIGNED,
                quality INT UNSIGNED,
+               normalized_score FLOAT,
                CONSTRAINT FK_STUDENT_EVALUATION_ID FOREIGN KEY (fk_student_id) REFERENCES student(id),
                CONSTRAINT FK_STUDENT_EVALUATION_MEMBER_ID FOREIGN KEY (fk_group_member_id) REFERENCES student(id),
                CONSTRAINT PK_STUDENT_EVALUATION_GROUP PRIMARY KEY (fk_student_id, fk_group_member_id)

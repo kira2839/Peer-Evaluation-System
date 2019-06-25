@@ -12,6 +12,7 @@ class StudentEvaluationModel
     const PARTICIPATION_COLUMN = "participation";
     const PROFESSIONALISM_COLUMN = "professionalism";
     const QUALITY_COLUMN = "quality";
+    const NORMALIZED_SCORE_COLUMN = "normalized_score";
     const COMMA = ",";
     const EQUAL = "=";
 
@@ -39,23 +40,26 @@ class StudentEvaluationModel
         return self::$instance;
     }
 
-    public function insert($studentID, $groupMemberID, $role, $leadership, $participation, $professionalism, $quality)
+    public function insert($studentID, $groupMemberID, $role, $leadership, $participation, $professionalism, $quality,
+                           $normalized_score)
     {
         $sql = "INSERT INTO " . self::TABLE_NAME .
             "(" . self::STUDENT_ID_COLUMN . self::COMMA . self::GROUP_MEMBER_ID_COLUMN .
             self::COMMA . self::ROLE_COLUMN . self::COMMA . self::LEADERSHIP_COLUMN .
             self::COMMA . self::PARTICIPATION_COLUMN . self::COMMA . self::PROFESSIONALISM_COLUMN .
-            self::COMMA . self::QUALITY_COLUMN . ") values (?, ?, ?, ?, ?, ?, ?)";
+            self::COMMA . self::QUALITY_COLUMN . self::COMMA . self::NORMALIZED_SCORE_COLUMN .
+            ") values (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('ddddddd', $studentID, $groupMemberID, $role, $leadership, $participation,
-            $professionalism, $quality);
+        $stmt->bind_param('dddddddd', $studentID, $groupMemberID, $role, $leadership, $participation,
+            $professionalism, $quality, $normalized_score);
         $return = $stmt->execute();
         $stmt->close();
         return $return;
     }
 
-    public function update($studentID, $groupMemberID, $role, $leadership, $participation, $professionalism, $quality)
+    public function update($studentID, $groupMemberID, $role, $leadership, $participation, $professionalism, $quality,
+                           $normalized_score)
     {
         //Update entry at student table
         $sql = "UPDATE " . self::TABLE_NAME .
@@ -63,12 +67,14 @@ class StudentEvaluationModel
             self::LEADERSHIP_COLUMN . self::EQUAL . "? " . self::COMMA .
             self::PARTICIPATION_COLUMN . self::EQUAL . "? " . self::COMMA .
             self::PROFESSIONALISM_COLUMN . self::EQUAL . "? " . self::COMMA .
-            self::QUALITY_COLUMN . self::EQUAL . "? WHERE " .
+            self::QUALITY_COLUMN . self::EQUAL . "? " . self::COMMA .
+            self::NORMALIZED_SCORE_COLUMN . self::EQUAL . "? WHERE " .
             self::STUDENT_ID_COLUMN . self::EQUAL . "? AND " .
             self::GROUP_MEMBER_ID_COLUMN . self::EQUAL . "?";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('ddddddd', $role, $leadership, $participation, $professionalism, $quality, $studentID, $groupMemberID);
+        $stmt->bind_param('dddddddd', $role, $leadership, $participation, $professionalism, $quality,
+            $normalized_score, $studentID, $groupMemberID);
         $return = $stmt->execute();
         $stmt->close();
         return $return;
