@@ -64,8 +64,8 @@ echo <<<EOC5
                         class="ui-button ui-corner-all ui-widget">Submit Ratings
     </button>
 </form>
-<script src="../jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
-<script src="../jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 
 function getData(event){

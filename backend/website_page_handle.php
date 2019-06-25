@@ -10,7 +10,7 @@ class WebSitePageHandle
 
 <head>
     <meta charset="utf-8">
-    <link href="../jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/humanity/jquery-ui.css">
     <link href="../main_site.css" type="text/css" rel="stylesheet">
     <link href="../start-evaluation-table.css" type="text/css" rel="stylesheet">
     <title>Peer Evaluations</title>
