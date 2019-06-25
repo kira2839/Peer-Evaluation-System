@@ -193,6 +193,29 @@ class StudentModel
         return false;
     }
 
+    public function getStudentEmail($id)
+    {
+        $studentMail = NULL;
+        //Select confirmation code from student table
+        $sql = "SELECT " . self::EMAIL_ADDRESS_COLUMN .
+            " FROM " . self::TABLE_NAME . " WHERE " .
+            self::ID_COLUMN . self::EQUAL . " ?";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('d', $id);
+        $stmt->bind_result($studentMail);
+        $result = $stmt->execute();
+        if ($result === false) {
+            return false;
+        }
+
+        while ($stmt->fetch()) {
+            $stmt->close();
+            return $studentMail;
+        }
+        return false;
+    }
+
     public function checkStudentEmail($email)
     {
         $studentCount = NULL;
