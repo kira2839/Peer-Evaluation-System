@@ -13,6 +13,7 @@ class StudentEvaluationModel
     const PROFESSIONALISM_COLUMN = "professionalism";
     const QUALITY_COLUMN = "quality";
     const NORMALIZED_SCORE_COLUMN = "normalized_score";
+    const COURSE_NAME_COLUMN = "course_name";
     const COMMA = ",";
     const EQUAL = "=";
 
@@ -40,25 +41,26 @@ class StudentEvaluationModel
         return self::$instance;
     }
 
-    public function insert($studentID, $groupMemberID, $role, $leadership, $participation, $professionalism, $quality,
+    public function insert($studentID, $groupMemberID, $courseName, $role, $leadership, $participation, $professionalism, $quality,
                            $normalized_score)
     {
         $sql = "INSERT INTO " . self::TABLE_NAME .
             "(" . self::STUDENT_ID_COLUMN . self::COMMA . self::GROUP_MEMBER_ID_COLUMN .
+            self::COMMA . self::COURSE_NAME_COLUMN .
             self::COMMA . self::ROLE_COLUMN . self::COMMA . self::LEADERSHIP_COLUMN .
             self::COMMA . self::PARTICIPATION_COLUMN . self::COMMA . self::PROFESSIONALISM_COLUMN .
             self::COMMA . self::QUALITY_COLUMN . self::COMMA . self::NORMALIZED_SCORE_COLUMN .
-            ") values (?, ?, ?, ?, ?, ?, ?, ?)";
+            ") values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('dddddddd', $studentID, $groupMemberID, $role, $leadership, $participation,
+        $stmt->bind_param('ddsdddddd', $studentID, $groupMemberID, $courseName, $role, $leadership, $participation,
             $professionalism, $quality, $normalized_score);
         $return = $stmt->execute();
         $stmt->close();
         return $return;
     }
 
-    public function update($studentID, $groupMemberID, $role, $leadership, $participation, $professionalism, $quality,
+    public function update($studentID, $groupMemberID, $courseName, $role, $leadership, $participation, $professionalism, $quality,
                            $normalized_score)
     {
         //Update entry at student table
@@ -70,17 +72,18 @@ class StudentEvaluationModel
             self::QUALITY_COLUMN . self::EQUAL . "? " . self::COMMA .
             self::NORMALIZED_SCORE_COLUMN . self::EQUAL . "? WHERE " .
             self::STUDENT_ID_COLUMN . self::EQUAL . "? AND " .
+            self::COURSE_NAME_COLUMN . self::EQUAL . "? AND " .
             self::GROUP_MEMBER_ID_COLUMN . self::EQUAL . "?";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('dddddddd', $role, $leadership, $participation, $professionalism, $quality,
-            $normalized_score, $studentID, $groupMemberID);
+        $stmt->bind_param('dddddddsd', $role, $leadership, $participation, $professionalism, $quality,
+            $normalized_score, $studentID, $courseName, $groupMemberID);
         $return = $stmt->execute();
         $stmt->close();
         return $return;
     }
 
-    public function getEvaluation($studentID, $groupMemberID)
+    public function getEvaluation($studentID, $groupMemberID, $courseName)
     {
         $role = NULL;
         $leadership = NULL;
@@ -98,10 +101,11 @@ class StudentEvaluationModel
             self::COMMA . self::QUALITY_COLUMN .
             " FROM " . self::TABLE_NAME . " WHERE " .
             self::STUDENT_ID_COLUMN . self::EQUAL . "? AND " .
+            self::COURSE_NAME_COLUMN . self::EQUAL . "? AND " .
             self::GROUP_MEMBER_ID_COLUMN . self::EQUAL . "?";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('dd', $studentID, $groupMemberID);
+        $stmt->bind_param('dds', $studentID, $groupMemberID, $courseName);
         $stmt->bind_result($role, $leadership, $participation, $professionalism, $quality);
         $result = $stmt->execute();
         if ($result === false) {
@@ -117,10 +121,11 @@ class StudentEvaluationModel
         return $evaluation;
     }
 
-    public function getScorePerCourse($courseNumber)
+    public function getScorePerCourse()
     {
         $student_id = NULL;
         $group_member_id = NULL;
+        $course_name = NULL;
         $role = NULL;
         $leadership = NULL;
         $participation = NULL;
@@ -132,6 +137,7 @@ class StudentEvaluationModel
         //Select confirmation code from student table
         $sql = "SELECT " . self::STUDENT_ID_COLUMN .
             self::COMMA . self::GROUP_MEMBER_ID_COLUMN .
+            self::COMMA . self::COURSE_NAME_COLUMN .
             self::COMMA . self::ROLE_COLUMN .
             self::COMMA . self::LEADERSHIP_COLUMN .
             self::COMMA . self::PARTICIPATION_COLUMN .
@@ -139,10 +145,10 @@ class StudentEvaluationModel
             self::COMMA . self::QUALITY_COLUMN .
             self::COMMA . self::NORMALIZED_SCORE_COLUMN .
             " FROM " . self::TABLE_NAME;
-            //. " WHERE " . self::STUDENT_ID_COLUMN . self::EQUAL . "?";
+
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_result($student_id, $group_member_id, $role, $leadership, $participation,
+        $stmt->bind_result($student_id, $group_member_id, $course_name, $role, $leadership, $participation,
             $professionalism, $quality, $normalized_score);
         $result = $stmt->execute();
         if ($result === false) {
@@ -151,7 +157,7 @@ class StudentEvaluationModel
 
         while ($stmt->fetch()) {
             $one_row = array();
-            array_push($one_row, $student_id, $group_member_id, $role, $leadership,
+            array_push($one_row, $student_id, $group_member_id, $course_name, $role, $leadership,
                 $participation, $professionalism, $quality, $normalized_score);
             array_push($evaluation, $one_row);
         }
