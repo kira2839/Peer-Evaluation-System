@@ -75,7 +75,7 @@ class Session
         echo <<<EOC
     <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; display: inline-block;">
 		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-		Not Logged in or Session expired. Please login again using get code</p>
+		Not Logged in or Session expired. Please login again using new confirmation code</p>
 	</div>
 EOC;
     }

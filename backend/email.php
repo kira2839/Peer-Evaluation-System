@@ -1,5 +1,7 @@
 <?php
 
+include_once('session.php');
+
 class Email
 {
     const CONFIRMATION_CODE_SIZE = 10;
@@ -76,6 +78,8 @@ class Email
         $requestURI = strstr($requestURI, "backend", true);
         $actualLink = $actualLink . $requestURI;
 
+        $sessionObj = Session::getInstance();
+
         $subject = "Evaluation confirmation";
 
         // Always set content-type when sending HTML email
@@ -90,7 +94,7 @@ class Email
         ob_start();
         echo <<< EOC
 Dear Student, <br> <br>
-Thank you for submitting evaluation. This is a confirmation message and a copy of your evaluation is given below for future reference. <br><br>
+Thank you for submitting evaluation for course $sessionObj->course_name. This is a confirmation message and a copy of your evaluation is given below for future reference. <br><br>
 $evaluation<br>
 You can edit or view at <a href="$actualLink">site</a> by logging in again.<br><br>Regards,<br>Instructor/TA
 EOC;

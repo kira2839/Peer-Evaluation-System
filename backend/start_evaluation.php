@@ -6,21 +6,48 @@ include_once('student_model.php');
 include_once('student_group_model.php');
 include_once('evaluation_meaning_model.php');
 
+//Start creating the html tags
+WebSitePageHandle::includeSiteHeader();
+
 // We get the created session instance which is created earlier then proceed or error out
 $sessionObj = Session::getInstance();
 
 if (!$sessionObj->isSessionValid()) {
     $sessionObj->destroy();
-    WebSitePageHandle::includeSiteHeader();
     $sessionObj->displaySessionExpiredMessage();
     return;
 }
 
-//Start creating the html tags
-WebSitePageHandle::includeSiteHeader();
+if (!isset($_POST['course_name'])) {
+    echo <<<EOC
+    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; display: inline-block;">
+		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+		Course is not being selected</p>
+	</div>
+EOC;
+    return;
+}
+$sessionObj->course_name = $_POST['course_name'];
+
+//1. Student Group ID
+
+$group_id = StudentGroupModel::getInstance()->getGroupID($sessionObj->student_id, $sessionObj->course_name);
+$sessionObj->group_id = $group_id;
+
+//2. Student All Group Members IDs
+$group_members_id = StudentGroupModel::getInstance()->getGroupMembersID($group_id, $sessionObj->course_name);
+$sessionObj->group_members_id = $group_members_id;
+
+//3. Evaluation Meaning
+$group_members_names = array();
+foreach ($group_members_id as $val) {
+    array_push($group_members_names, StudentModel::getInstance()->getStudentName($val));
+}
+$sessionObj->group_members_names = $group_members_names;
 
 echo <<<EOC1
     <form id="student_eval" name="start_eval">
+    <p class="show_msg"> Evaluation for $sessionObj->course_name </p>
 EOC1;
 
 $group_members_names = $sessionObj->group_members_names;
@@ -105,9 +132,10 @@ function postToPHPforInsertion(data) {
     }).done(function (msg) {
         document.getElementById("student_eval").innerHTML = "";
         document.getElementById("student_eval").innerHTML = msg;
-        return false;
     });
-    return true;
+    return false;
 }
 </script>
 EOC5;
+
+return "success";
