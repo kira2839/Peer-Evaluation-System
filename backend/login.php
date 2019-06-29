@@ -58,5 +58,5 @@ if ($confirmationCode->validateCode($_POST['confirmation_code'], $email->getEmai
     $sessionObj->evaluation_meaning = EvaluationMeaningModel::getInstance()->getAllData();
 
     echo "Validated your details. Soon the evaluation system will be ready for next step. Try Later";
-    //WebSitePageHandle::redirectUser("start_evaluation.php");
+    return;
 }

@@ -33,7 +33,6 @@ if (isset($_POST['form_data'])) {
 		Successfully submitted your evaluation for $sessionObj->course_name. A confirmation email has been sent</p>
 	</div> <br> <br>
 EOC;
-        $evaluation_per_member = StudentEvaluationModel::getInstance()->getEvaluation($sessionObj->student_id, 1);
         $email = new Email($sessionObj->email_id);
         $group_members_names = $sessionObj->group_members_names;
         $evaluation = NULL;

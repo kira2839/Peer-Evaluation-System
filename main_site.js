@@ -100,8 +100,6 @@ function postToServerForConfirmationCodeValidation() {
         }
     }).done(function (msg) {
         if (msg.includes("Validated")) {
-            document.getElementById("email_id_tab2").value = "";
-            document.getElementById("confirmation_code").value = "";
             window.location.href = "backend/course_selection.php";
         } else {
             document.getElementById("error_text_tab2").innerHTML = msg;

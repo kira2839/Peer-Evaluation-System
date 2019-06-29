@@ -40,7 +40,7 @@ foreach ($course_names as $index => $course_name) {
         $class_corner = $class_corner . " " . "ui-corner-bottom";
     }
     echo <<< EOC2
-    <button name='course_name' class="ui-button $class_corner ui-widget" value="$course_name" style="padding-left: 150px; padding-right: 150px;">
+    <button name='course_name' class="ui-button $class_corner ui-widget" value="$course_name" style="width:375px;">
         $course_name
     </button>
 <br>
