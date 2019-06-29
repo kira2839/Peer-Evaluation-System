@@ -31,8 +31,8 @@ EOC;
     public static function redirectUser($page = 'start_evaluation.php')
     {
         // Start defining the URL...
-        // URL is http:// plus the host name plus the current directory:
-        $url = 'http://' . $_SERVER
+        // URL is https:// plus the host name plus the current directory:
+        $url = 'https://' . $_SERVER
             ['HTTP_HOST'] . dirname
             ($_SERVER['PHP_SELF']);
 

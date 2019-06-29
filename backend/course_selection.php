@@ -18,11 +18,17 @@ if (!$sessionObj->isSessionValid()) {
     return;
 }
 
+if (isset($_POST['course_name'])) {
+    $sessionObj->course_name = $_POST['course_name'];
+    WebSitePageHandle::redirectUser('start_evaluation.php');
+    return;
+}
+
 $course_names = StudentGroupModel::getInstance()->getCourseNames($sessionObj->student_id);
 
 echo <<<EOC1
     <p class="show_msg"> Your courses </p>
-    <form action='start_evaluation.php' id="course_selection" name="course_selection" method='post'>
+    <form action='course_selection.php' id="course_selection" name="course_selection" method='post'>
 EOC1;
 
 foreach ($course_names as $index => $course_name) {

@@ -18,7 +18,7 @@ if (!$sessionObj->isSessionValid()) {
     return;
 }
 
-if (!isset($_POST['course_name'])) {
+if (!isset($sessionObj->course_name)) {
     echo <<<EOC
     <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; display: inline-block;">
 		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
@@ -27,7 +27,6 @@ if (!isset($_POST['course_name'])) {
 EOC;
     return;
 }
-$sessionObj->course_name = $_POST['course_name'];
 
 //1. Student Group ID
 
