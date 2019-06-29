@@ -26,8 +26,15 @@ echo <<<EOC1
 EOC1;
 
 foreach ($course_names as $index => $course_name) {
+    $class_corner = NULL;
+    if($index === 0) {
+        $class_corner = "ui-corner-top";
+    }
+    if($index === (count($course_names) - 1)){
+        $class_corner = $class_corner . " " . "ui-corner-bottom";
+    }
     echo <<< EOC2
-    <button name='course_name' class="ui-button ui-corner-all ui-widget" value="$course_name" style="padding-left: 100px; padding-right: 100px;">
+    <button name='course_name' class="ui-button $class_corner ui-widget" value="$course_name" style="padding-left: 150px; padding-right: 150px;">
         $course_name
     </button>
 <br>
