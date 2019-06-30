@@ -20,7 +20,7 @@ if (!$sessionObj->isSessionValid()) {
 
 if (isset($_POST['course_name'])) {
     $sessionObj->course_name = $_POST['course_name'];
-    WebSitePageHandle::redirectUser('start_evaluation.php');
+    WebSitePageHandle::redirectUser('edit_evaluation.php');
     return;
 }
 
