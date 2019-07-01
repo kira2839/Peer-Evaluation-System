@@ -117,6 +117,7 @@ echo <<<EOC5
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript">
 
+
 function removeSuccessMsg() {
     var node = document.getElementById("display_evaluation_submit_result");
     $("#display_evaluation_submit_result").fadeOut(2000);
