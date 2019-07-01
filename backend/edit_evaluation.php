@@ -117,6 +117,12 @@ echo <<<EOC5
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript">
 
+function removeSuccessMsg() {
+    var node = document.getElementById("display_evaluation_submit_result");
+    $("#display_evaluation_submit_result").fadeOut(2000);
+    window.location.href = "display_evaluation.php";
+}
+
 function getData(event){
     event.preventDefault();
     var data=[];
@@ -154,10 +160,9 @@ function postToPHPforUpdation(data) {
     }).done(function (msg) {
         document.getElementById("student_eval").innerHTML = "";
         document.getElementById("student_eval").innerHTML = msg;
-        // setTimeout(removeSuccessMsg, 3000);
-        return false;
+        setTimeout(removeSuccessMsg, 3000);
     });
-    return true;
+    return false;
 }
 </script>
 EOC5;
