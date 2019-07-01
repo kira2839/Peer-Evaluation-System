@@ -5,7 +5,7 @@ class DBConnector
     private $serverName = "tethys.cse.buffalo.edu";
     private $userName = "smishra9";
     private $password = "welcome_123#";
-    private $databaseName = "smishra9_db";
+    private $databaseName = "cse442_542_2019_summer_teama_db";
 
     private $dbConnection = NULL;
 

@@ -13,6 +13,7 @@ class StudentEvaluationModel
     const PROFESSIONALISM_COLUMN = "professionalism";
     const QUALITY_COLUMN = "quality";
     const NORMALIZED_SCORE_COLUMN = "normalized_score";
+    const COURSE_NAME_COLUMN = "course_name";
     const COMMA = ",";
     const EQUAL = "=";
 
@@ -117,10 +118,11 @@ class StudentEvaluationModel
         return $evaluation;
     }
 
-    public function getScorePerCourse($courseNumber)
+    public function getAllScore()
     {
         $student_id = NULL;
         $group_member_id = NULL;
+        $course_name = NULL;
         $role = NULL;
         $leadership = NULL;
         $participation = NULL;
@@ -132,6 +134,7 @@ class StudentEvaluationModel
         //Select confirmation code from student table
         $sql = "SELECT " . self::STUDENT_ID_COLUMN .
             self::COMMA . self::GROUP_MEMBER_ID_COLUMN .
+            self::COMMA . self::COURSE_NAME_COLUMN .
             self::COMMA . self::ROLE_COLUMN .
             self::COMMA . self::LEADERSHIP_COLUMN .
             self::COMMA . self::PARTICIPATION_COLUMN .
@@ -139,10 +142,10 @@ class StudentEvaluationModel
             self::COMMA . self::QUALITY_COLUMN .
             self::COMMA . self::NORMALIZED_SCORE_COLUMN .
             " FROM " . self::TABLE_NAME;
-            //. " WHERE " . self::STUDENT_ID_COLUMN . self::EQUAL . "?";
+
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_result($student_id, $group_member_id, $role, $leadership, $participation,
+        $stmt->bind_result($student_id, $group_member_id, $course_name, $role, $leadership, $participation,
             $professionalism, $quality, $normalized_score);
         $result = $stmt->execute();
         if ($result === false) {
@@ -151,7 +154,7 @@ class StudentEvaluationModel
 
         while ($stmt->fetch()) {
             $one_row = array();
-            array_push($one_row, $student_id, $group_member_id, $role, $leadership,
+            array_push($one_row, $student_id, $group_member_id, $course_name, $role, $leadership,
                 $participation, $professionalism, $quality, $normalized_score);
             array_push($evaluation, $one_row);
         }
