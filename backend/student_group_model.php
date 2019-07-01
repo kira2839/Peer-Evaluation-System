@@ -7,8 +7,10 @@ class StudentGroupModel
     const TABLE_NAME = "student_group";
     const GROUP_ID_COLUMN = "group_id";
     const STUDENT_ID_COLUMN = "fk_student_id";
+    const COURSE_NAME_COLUMN = "course_name";
     const COMMA = ",";
     const EQUAL = "=";
+
 
     private $dbConnector;
 
@@ -34,41 +36,44 @@ class StudentGroupModel
         return self::$instance;
     }
 
-    public function insert($groupID, $studentID)
+    public function insert($groupID, $studentID, $courseName)
     {
         $sql = "INSERT INTO " . self::TABLE_NAME .
-            "(" . self::GROUP_ID_COLUMN . self::COMMA . self::STUDENT_ID_COLUMN . ") values (?, ?)";
+            "(" . self::GROUP_ID_COLUMN . self::COMMA . self::STUDENT_ID_COLUMN .
+            self::COMMA . self::COURSE_NAME_COLUMN . ") values (?, ?, ?)";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('dd', $groupID, $studentID);
+        $stmt->bind_param('dds', $groupID, $studentID, $courseName);
         $return = $stmt->execute();
         $stmt->close();
         return $return;
     }
 
-    public function update($groupID, $studentID)
+    public function update($groupID, $studentID, $courseName)
     {
         //Update entry at student table
         $sql = "UPDATE " . self::TABLE_NAME .
             " SET " . self::GROUP_ID_COLUMN . self::EQUAL . "?" .
+            self::COMMA . self::COURSE_NAME_COLUMN . self::EQUAL . "?" .
             " WHERE " . self::STUDENT_ID_COLUMN . self::EQUAL . "?";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('dd', $groupID, $studentID);
+        $stmt->bind_param('dds', $groupID, $studentID, $courseName);
         $stmt->execute();
         $stmt->close();
     }
 
-    public function getGroupID($studentID)
+    public function getGroupID($studentID, $courseName)
     {
         $groupID = NULL;
         //Select confirmation code from student table
         $sql = "SELECT " . self::GROUP_ID_COLUMN .
             " FROM " . self::TABLE_NAME . " WHERE " .
-            self::STUDENT_ID_COLUMN . self::EQUAL . " ? ";
+            self::STUDENT_ID_COLUMN . self::EQUAL . " ? AND " .
+            self::COURSE_NAME_COLUMN . self::EQUAL . "?" ;
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('d', $studentID);
+        $stmt->bind_param('ds', $studentID, $courseName);
         $stmt->bind_result($groupID);
         $result = $stmt->execute();
         if ($result === false) {
@@ -82,17 +87,18 @@ class StudentGroupModel
         return false;
     }
 
-    public function getGroupMembersID($groupID)
+    public function getGroupMembersID($groupID, $courseName)
     {
         $id = NULL;
         $studentIDs = array();
         //Select confirmation code from student table
         $sql = "SELECT " . self::STUDENT_ID_COLUMN .
             " FROM " . self::TABLE_NAME . " WHERE " .
-            self::GROUP_ID_COLUMN . self::EQUAL . " ?";
+            self::GROUP_ID_COLUMN . self::EQUAL . " ? AND " .
+            self::COURSE_NAME_COLUMN . self::EQUAL . "?";
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
-        $stmt->bind_param('s', $groupID);
+        $stmt->bind_param('ds', $groupID, $courseName);
         $stmt->bind_result($id);
         $result = $stmt->execute();
         if ($result === false) {
@@ -105,5 +111,30 @@ class StudentGroupModel
 
         $stmt->close();
         return $studentIDs;
+    }
+
+    public function getCourseNames($studentId)
+    {
+        $courseName = NULL;
+        $courseNames = array();
+        //Select confirmation code from student table
+        $sql = "SELECT DISTINCT(" . self::COURSE_NAME_COLUMN .
+            ") FROM " . self::TABLE_NAME . " WHERE " .
+            self::STUDENT_ID_COLUMN . self::EQUAL . " ? " ;
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('d', $studentId);
+        $stmt->bind_result($courseName);
+        $result = $stmt->execute();
+        if ($result === false) {
+            return false;
+        }
+
+        while ($stmt->fetch()) {
+            array_push($courseNames, $courseName);
+        }
+
+        $stmt->close();
+        return $courseNames;
     }
 }

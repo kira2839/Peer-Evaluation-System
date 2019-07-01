@@ -1,2 +1,2 @@
 # CSE542
-The code with fully working functionalities appear here.
+The repository contains the code for Peer Evaluation developed as part of course CSE542.
