@@ -27,7 +27,7 @@ class GetScore
     }
 
     public function getPerCourse() {
-        $result = StudentEvaluationModel::getInstance()->getScorePerCourse(1);
+        $result = StudentEvaluationModel::getInstance()->getAllScore();
         echo "student_email_id,evaluation_submitted_by,role,leadership,participation,professionalism,quality,normalized_score\r\n" ;
         foreach ($result as $index => $each_row) {
             $evaluation_given_by = StudentModel::getInstance()->getStudentEmail($each_row[0]);
@@ -43,5 +43,3 @@ class GetScore
         }
     }
 }
-
-GetScore::getInstance()->getPerCourse();
