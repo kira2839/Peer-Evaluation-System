@@ -101,13 +101,14 @@ class StudentEvaluationModel
             self::COMMA . self::QUALITY_COLUMN .
             " FROM " . self::TABLE_NAME . " WHERE " .
             self::STUDENT_ID_COLUMN . self::EQUAL . "? AND " .
-            self::COURSE_NAME_COLUMN . self::EQUAL . "? AND " .
-            self::GROUP_MEMBER_ID_COLUMN . self::EQUAL . "?";
+            self::GROUP_MEMBER_ID_COLUMN . self::EQUAL."? AND ".
+            self::COURSE_NAME_COLUMN . self::EQUAL . "?";
+
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
         $stmt->bind_param('dds', $studentID, $groupMemberID, $courseName);
-        $stmt->bind_result($role, $leadership, $participation, $professionalism, $quality);
         $result = $stmt->execute();
+        $stmt->bind_result($role, $leadership, $participation, $professionalism, $quality);
         if ($result === false) {
             return false;
         }
