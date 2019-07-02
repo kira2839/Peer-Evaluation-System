@@ -107,8 +107,8 @@ class StudentEvaluationModel
 
         $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
         $stmt->bind_param('dds', $studentID, $groupMemberID, $courseName);
-        $result = $stmt->execute();
         $stmt->bind_result($role, $leadership, $participation, $professionalism, $quality);
+        $result = $stmt->execute();
         if ($result === false) {
             return false;
         }

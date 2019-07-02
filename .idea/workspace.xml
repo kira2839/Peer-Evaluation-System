@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="038f4261-1e41-4845-84f8-251b9a573274" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/course_selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/course_selection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db_connector.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db_connector.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/edit_evaluation.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/edit_evaluation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/email.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/email.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/display_evaluation.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/display_evaluation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/student_evaluation_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/student_evaluation_model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/submit_evaluation.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/submit_evaluation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/website_page_handle.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/website_page_handle.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/display_evaluation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="119">
+              <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -87,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/student_evaluation_model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="131" column="30" lean-forward="true" selection-start-line="131" selection-start-column="30" selection-end-line="131" selection-end-column="30" />
+            <state relative-caret-position="562">
+              <caret line="115" column="32" lean-forward="true" selection-start-line="115" selection-start-column="32" selection-end-line="115" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -97,8 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>TIME_FOR_CODE_EXPIRY</find>
-      <find>start_eva</find>
       <find>SESSION_STARTED</find>
       <find>css</find>
       <find>startSession</find>
@@ -127,7 +120,12 @@
       <find>password_hash</find>
       <find>student_id</find>
       <find>getAll</find>
+      <find>Course is</find>
+      <find>get</find>
     </findStrings>
+    <dirStrings>
+      <dir>D:\Karthik\MS_CS\Summer_19\SEC\Project\git_repo\CSE542</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -168,6 +166,8 @@
         <option value="$PROJECT_DIR$/backend/db_connector.php" />
         <option value="$PROJECT_DIR$/backend/email.php" />
         <option value="$PROJECT_DIR$/backend/submit_evaluation.php" />
+        <option value="$PROJECT_DIR$/backend/display_evaluation.php" />
+        <option value="$PROJECT_DIR$/backend/student_evaluation_model.php" />
       </list>
     </option>
   </component>
@@ -192,6 +192,11 @@
             <path>
               <item name="CSE542" type="b2602c69:ProjectViewProjectNode" />
               <item name="CSE542" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CSE542" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSE542" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -274,7 +279,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175991000" />
+    <option name="totallyTimeSpent" value="176086000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -539,7 +544,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/display_evaluation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="119">
+          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
           </folding>
@@ -558,8 +564,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/student_evaluation_model.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="131" column="30" lean-forward="true" selection-start-line="131" selection-start-column="30" selection-end-line="131" selection-end-column="30" />
+        <state relative-caret-position="562">
+          <caret line="115" column="32" lean-forward="true" selection-start-line="115" selection-start-column="32" selection-end-line="115" selection-end-column="32" />
         </state>
       </provider>
     </entry>

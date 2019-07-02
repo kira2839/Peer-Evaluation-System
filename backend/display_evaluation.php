@@ -21,7 +21,7 @@ if (!isset($sessionObj->course_name)) {
     echo <<<EOC
     <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; display: inline-block;">
 		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-		Course is not selected</p>
+		Course not selected</p>
 	</div>
 EOC;
     return;
