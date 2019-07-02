@@ -83,7 +83,7 @@ class StudentEvaluationModel
         return $return;
     }
 
-    public function getEvaluation($studentID, $groupMemberID, $courseName)
+    public function getEvaluationPerGroupMember($studentID, $groupMemberID, $courseName)
     {
         $role = NULL;
         $leadership = NULL;
@@ -114,7 +114,7 @@ class StudentEvaluationModel
         }
 
         while ($stmt->fetch()) {
-            array_push($evaluation, $role, $leadership, $participation, $professionalism, $quality);
+            array_push($evaluation, $leadership, $participation, $professionalism, $quality, $role);
             break;
         }
 
@@ -122,7 +122,7 @@ class StudentEvaluationModel
         return $evaluation;
     }
 
-    public function getScorePerCourse()
+    public function getAllScore()
     {
         $student_id = NULL;
         $group_member_id = NULL;
@@ -160,6 +160,46 @@ class StudentEvaluationModel
             $one_row = array();
             array_push($one_row, $student_id, $group_member_id, $course_name, $role, $leadership,
                 $participation, $professionalism, $quality, $normalized_score);
+            array_push($evaluation, $one_row);
+        }
+
+        $stmt->close();
+        return $evaluation;
+    }
+
+    public function getScoreSubmitPerCourse($studentID, $courseName)
+    {
+        $group_member_id = NULL;
+        $role = NULL;
+        $leadership = NULL;
+        $participation = NULL;
+        $professionalism = NULL;
+        $quality = NULL;
+        $evaluation = array();
+
+        //Select confirmation code from student table
+        $sql = "SELECT " . self::GROUP_MEMBER_ID_COLUMN .
+            self::COMMA . self::ROLE_COLUMN .
+            self::COMMA . self::LEADERSHIP_COLUMN .
+            self::COMMA . self::PARTICIPATION_COLUMN .
+            self::COMMA . self::PROFESSIONALISM_COLUMN .
+            self::COMMA . self::QUALITY_COLUMN .
+            " FROM " . self::TABLE_NAME . " WHERE " .
+            self::STUDENT_ID_COLUMN . self::EQUAL . "? AND " .
+            self::COURSE_NAME_COLUMN . self::EQUAL . "?";
+
+        $stmt = $this->dbConnector->getDBConnection()->prepare($sql);
+        $stmt->bind_param('ds', $studentID, $courseName);
+        $stmt->bind_result($group_member_id, $role, $leadership, $participation, $professionalism, $quality);
+        $result = $stmt->execute();
+        if ($result === false) {
+            return false;
+        }
+
+        while ($stmt->fetch()) {
+            $one_row = array();
+            array_push($one_row, $group_member_id, $role, $leadership,
+                $participation, $professionalism, $quality);
             array_push($evaluation, $one_row);
         }
 

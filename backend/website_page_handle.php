@@ -25,10 +25,24 @@ class WebSitePageHandle
         <li style="float:right" class="bar_li"><a class="about orange" href="../about_us.html">About Us</a></li>
     </ul>
 </div>
-<br> <br>
+<br>
 EOC;
     }
-    public static function redirectUser($page = 'start_evaluation.php')
+
+    public static function startBodyTag() {
+        echo <<<EOC
+<body>
+EOC;
+    }
+
+    public static function endBodyTags() {
+        echo <<<EOC
+</body>
+</html>
+EOC;
+    }
+
+    public static function redirectUser($page = 'edit_evaluation.php')
     {
         // Start defining the URL...
         // URL is https:// plus the host name plus the current directory:

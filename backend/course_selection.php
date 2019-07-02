@@ -5,6 +5,8 @@ include_once('session.php');
 include_once('student_model.php');
 include_once('student_group_model.php');
 include_once('evaluation_meaning_model.php');
+include_once("student_evaluation_model.php");
+include_once('evaluation_handle.php');
 
 // We get the created session instance which is created earlier then proceed or error out
 $sessionObj = Session::getInstance();
@@ -20,7 +22,32 @@ if (!$sessionObj->isSessionValid()) {
 
 if (isset($_POST['course_name'])) {
     $sessionObj->course_name = $_POST['course_name'];
-    WebSitePageHandle::redirectUser('edit_evaluation.php');
+
+    //1. Student Group ID
+    $group_id = StudentGroupModel::getInstance()->getGroupID($sessionObj->student_id, $sessionObj->course_name);
+    $sessionObj->group_id = $group_id;
+
+    //2. Student All Group Members IDs
+    $group_members_id = StudentGroupModel::getInstance()->getGroupMembersID($group_id, $sessionObj->course_name);
+    $sessionObj->group_members_id = $group_members_id;
+
+    //3. Evaluation Meaning
+    $group_members_names = array();
+
+    foreach ($group_members_id as $val) {
+        array_push($group_members_names, StudentModel::getInstance()->getStudentName($val));
+    }
+    $sessionObj->group_members_names = $group_members_names;
+
+    $score_submit_for_student =
+        StudentEvaluationModel::getInstance()->getScoreSubmitPerCourse($sessionObj->student_id, $sessionObj->course_name);
+    if(count($score_submit_for_student) === 0) {
+        WebSitePageHandle::redirectUser('edit_evaluation.php');
+    } else {
+        $sessionObj->evaluation = EvaluationHandle::getInstance()->displayEvaluation($sessionObj);
+        WebSitePageHandle::redirectUser('display_evaluation.php');
+    }
+
     return;
 }
 

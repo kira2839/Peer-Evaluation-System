@@ -15,7 +15,6 @@ $sessionObj = Session::getInstance();
 
 if (!$sessionObj->isSessionValid()) {
     $sessionObj->destroy();
-    WebSitePageHandle::includeSiteHeader();
     $sessionObj->displaySessionExpiredMessage();
     return;
 }
@@ -30,45 +29,26 @@ EOC;
     return;
 }
 
-
-//1. Student Group ID
-$group_id = StudentGroupModel::getInstance()->getGroupID($sessionObj->student_id, $sessionObj->course_name);
-$sessionObj->group_id = $group_id;
-
-//2. Student All Group Members IDs
-$group_members_id = StudentGroupModel::getInstance()->getGroupMembersID($group_id, $sessionObj->course_name);
-$sessionObj->group_members_id = $group_members_id;
-
-//3. Evaluation Meaning
-$group_members_names = array();
-foreach ($group_members_id as $val) {
-    array_push($group_members_names, StudentModel::getInstance()->getStudentName($val));
-}
-$sessionObj->group_members_names = $group_members_names;
-
-
 echo <<<EOC1
+    <p id="evaluation_header" class="show_msg"> Evaluation for $sessionObj->course_name </p>
+    <div id="course_selection_button" style="display: inline-block;">
+    <a class="bar_li about orange" style="float:right; background: #CC852A;" href="course_selection.php">Change Course</a>
+	</div><br><br>
     <form id="student_eval" name="start_eval">
-    <p class="show_msg"> Evaluation for $sessionObj->course_name </p>
 EOC1;
 
+$group_members_names = $sessionObj->group_members_names;
 $group_members_count = count($sessionObj->group_members_id);
 $category_count = count($sessionObj->evaluation_meaning);
-$student_id = $sessionObj->student_id;
 
 foreach ($sessionObj->group_members_id as $index => $group_member) {
     $evaluation_data = array();
-    $evaluation_data = StudentEvaluationModel::getInstance()->getEvaluation($student_id, $group_member,$sessionObj->course_name);
+    $evaluation_data = StudentEvaluationModel::getInstance()->getEvaluationPerGroupMember($sessionObj->student_id, $group_member,$sessionObj->course_name);
     if (count($evaluation_data) < 1) {
         for ($i = 0; $i < $category_count; $i++) {
             array_push($evaluation_data, 2);
         }
     }
-    $temp0 = $sessionObj->group_members_names;
-    echo<<<EOCtemp
-<h1>$temp0</h1>
-EOCtemp;
-
 
     echo <<< EOC2
     <li id="group_member_$index" value="$group_member" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-top">$group_members_names[$index]</li>
@@ -120,7 +100,11 @@ echo <<<EOC5
 
 function removeSuccessMsg() {
     var node = document.getElementById("display_evaluation_submit_result");
-    $("#display_evaluation_submit_result").fadeOut(2000);
+    $("#display_evaluation_submit_result").fadeOut(1000);
+    setTimeout(redirectToDisplay, 1000);
+}
+
+function redirectToDisplay() {
     window.location.href = "display_evaluation.php";
 }
 
@@ -159,13 +143,17 @@ function postToPHPforUpdation(data) {
             form_data: data
         }
     }).done(function (msg) {
+        var tagToRemove = document.getElementById("course_selection_button");
+        tagToRemove.parentNode.removeChild(tagToRemove);
+        tagToRemove = document.getElementById("evaluation_header");
+        tagToRemove.parentNode.removeChild(tagToRemove);
         document.getElementById("student_eval").innerHTML = "";
         document.getElementById("student_eval").innerHTML = msg;
-        setTimeout(removeSuccessMsg, 3000);
+        setTimeout(removeSuccessMsg, 1000);
     });
     return false;
 }
 </script>
 EOC5;
 
-?>
+return "success";

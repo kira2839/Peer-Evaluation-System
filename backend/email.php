@@ -49,8 +49,8 @@ class Email
         $subject = "Confirmation code for the evaluation";
         //Construct email body to be sent
         $msg = "Dear Student,\r\n\r\nThank you for initiating evaluation process.\r\n" .
-            "Use confirmation code: " . $confirmationCode .
-            " to begin your evaluation.\r\nTo start evaluation go to " . $actualLink . " and enter your details.\r\nP.S. " .
+            "Your Confirmation Code is: " . $confirmationCode .
+            "\r\nTo start evaluation go to " . $actualLink . " and enter your details.\r\nP.S. " .
             "The code will be valid for next 15 minutes only. You can re-generate if necessary.\r\n\r\nRegards,\r\nInstructor/TA";
         try {
             //send message with code to student
